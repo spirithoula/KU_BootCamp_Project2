@@ -1,0 +1,63 @@
+form {
+    margin: auto;
+  }
+  
+  
+  html {
+    background-image:  url("../images/family.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100%;
+  }
+  
+  .loginBox {
+    max-width: 300px;
+    margin: auto;
+    background-color: rgba(54, 59, 136, 0.331);
+    padding: 20px;
+    border: transparent solid 2px;
+    border-radius: 10px;
+  
+  }
+  
+  .title, .subtitle {
+    font-family: 'Acme', sans-serif;
+    color: rgba(54, 59, 136, 0.71) !important;
+    text-shadow: 0 0 2px black;
+  }
+  
+  .modal-card-body{
+    background-image: url("../images/family.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .modal-card-head,
+  .modal-card-foot {
+    background: radial-gradient(ellipse at bottom, #1b2735, #090a0f);
+  }
+
+  ul{
+    list-style: none;
+  }
+  .content ul {
+    list-style-image: url("/images/ever24.png");
+    
+  }
+  li {
+    font-size: 15px;
+  }
+ 
+  .login-description {
+    background-color: rgba(54, 59, 136, 0.331);
+    color: white;
+    font-weight: 700;
+    font-size: 24px;  
+    margin-top: 30px; 
+  }
+
+  .content h2, .content h3, .label {
+    color: white;
+  }
