@@ -1,33 +1,74 @@
-<div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Members:</h3>
-        <ul id="member-list" class="list-group">
-          {{#each dogs}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="member/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+<link rel="stylesheet" href="/styles/login.css" media="screen" title="no title" charset="utf-8">
+   {{!-- modal --}}
+    <div class="modal" id="wentWrongModal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="modal-card">
+          <header class="modal-card-head">
+          {{!-- empty header --}}
+          </header>
+          <section class="modal-card-body">
+            <div class="dog-modal-content has-text-centered">
+              <h3 class="title is-3">Something Went Wrong!<br>Please Try Again!</h3>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            {{!-- empty footer because it looks nice --}}
+          </footer>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+    {{!-- end modal --}}
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+<div class="section">
+  <!-- main container -->
+  <div class="container">
+    <!-- title/subtitle box -->
+    <div class="content has-text-centered wow fadeInUp" data-wow-duration="0.75s" data-wow-delay=".5s">
+      <h1 class="title is-1">Welcome to Ever24</h1>
+      <h2 class="subtitle is-3">Your panic app solution for instant connection and communication!</h2>
+     <!-- login form box -->
+      {{!-- <div class="level"> --}}
+        <div class="loginBox has-text-centered wow fadeInUp" data-wow-duration="2s" data-wow-delay="1.2s">
+          <form id="login">
+            <!-- user name field -->
+            <div class="field">
+              <h2>Log In Portal:</h2>
+              <label class="label">Email</label>
+              <div class="control">
+                <input class="input" id="email-input" type="text" placeholder="Your Email Here" />
+              </div>
+            </div>
+            <!-- password field -->
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">
+                <input class="input" type="password" placeholder="Your Password Here" />
+              </div>
+            </div>
+            <!-- form submit button -->
+            <div>
+              <button class="button is-rounded is-success" type="submit">Log In</button>
+              <a href="#" class="button is-rounded" id="createAccount">Create Account</a>
+            </div>
+          </form>
+        </div>
+      {{!-- </div> --}} 
+    <div class="login-description wow fadeInUp" data-wow-duration="2s" data-wow-delay="1.3s">
+      <h2>Our Mission:</h2>
+      <p>Our platform is an All-In-One Panic Application portal. With our design, you can input and track all of your family member's information, into user profiles. These profiles are designed to efficiently and effectively communicate information if there is a panic situation. Details below:  </p>
+      <ul class="custom-list">
+        <li>Basic Information (Name, Address, phone number, birth date, and profile picture)</li>
+        <li>Medical Information (Medical Conditions, existing allergies, physicians, blood type, prescriptions)</li>
+        <li>Emergency Contacts (Contacts that can be alerted if a panic situation arises)</li>
+      </ul>
+    </div>
+    </div>
+    
+  </div><!-- end container -->
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script>new WOW().init()</script>
+
+<script src="/js/login.js"></script>
