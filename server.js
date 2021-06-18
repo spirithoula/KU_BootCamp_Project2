@@ -26,8 +26,8 @@ const sess = {
 };
 
 app.use(session(sess));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Inform Express.js on which template engine to use
 app.engine('handlebars', hbs.engine);
