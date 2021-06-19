@@ -22,10 +22,10 @@ Member.init(
       type: DataTypes.STRING,
     },
     height: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
     },
     weight: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
     },
     profileImage: {
       type: DataTypes.STRING,
