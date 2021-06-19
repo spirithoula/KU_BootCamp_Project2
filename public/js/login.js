@@ -1,6 +1,6 @@
 function newAccountButton(){
     $("#createAccount").click(function() {
-      window.location.href = "/user/new";
+      window.location.href = "/new";
     });
   };
   

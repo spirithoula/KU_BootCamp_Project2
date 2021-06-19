@@ -1,57 +1,71 @@
-  
-var db = require("../models");
+const router = require('express').Router();
+const { Member, User } = require('../models'); 
 const withAuth = require('../utils/auth');
 
 
-module.exports = function(app) {
-  app.get("/calendar", withAuth, (request, response) => {
-    response.render("calendar", {
-      title: "Calendar"
-    });
+router.get("/", (req, res) => {
+  try {
+    res.render("index", 
+  {
+    title: "Ever24",
+    layout: "login",
+    logged_in: req.session.logged_in
   });
+  }catch (err) {
+    res.status(500).json(err);
+  }  
+});
 
- 
-  app.get("/user/profile", withAuth, (request, response, next) => {
-      response.render("profile", {
-        title: "User Profile",
-    });
+router.get("/new", (req, res) => {
+  try {
+    res.render("createAccount", 
+  {
+    title: "New User",
+    layout: "login",
+    logged_in: req.session.logged_in
   });
+  }catch (err) {
+    res.status(500).json(err);
+  }  
+});
 
-  app.get("/user/new", (request, response) => {
-    response.render("createAccount", 
-    {
-      title: "New User",
-      layout: "login"
-    });
+router.get("/profile", withAuth, (req, res, next) => {
+  try {
+    // const userData = await User.findByPk(req.session.user_id, {
+    //   attributes: { exclude: ['password'] },
+    //   include: [{ model: Member }],
+    // });
+    // const user = userData.get({ plain: true });
+    res.render("profile", 
+  {
+    ...user,
+    logged_in: true,
+    title: "User Profile",
   });
+  }catch (err) {
+    res.status(500).json(err);
+  }  
+});
 
-  app.get("/seeds", (request, response) => {
-    response.render("seeds", {title: "Seed page"})
-  })
+router.get("*", (req, res) => {
+  try {
+    res.render("404")
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-  app.get("/", (request, response) => {
-    response.render("index", 
-    {
-      title: "Ever24",
-      layout: "login"
-    });
-  });
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/profile');
+    return;
+  }
 
-  // Render 404 page for any unmatched routes
-  app.get("*", (request, response) => {
-    response.render("404");
-  });
-};
+  res.render('login');
+});
+
+//
 
 
-function formatDate(dateOnly) {
-  const date = new Date(dateOnly + "T00:00:00");
-  const dateString = date.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    weekday: "long",
-    year: "numeric",
-  });
-  
-  return dateString;
-}
+module.exports = router;
