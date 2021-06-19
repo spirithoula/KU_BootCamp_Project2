@@ -6,6 +6,9 @@ html {
     background-repeat: no-repeat;
     background-size:cover;
   }
+  .notFound {
+    background-image: url("../images/notFound.jpg")
+  }
   
   .navbar-item img {
     max-height: 5rem;
