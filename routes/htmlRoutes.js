@@ -46,6 +46,18 @@ router.get("/profile", withAuth, async (req, res, next) => {
   }  
 });
 
+router.get("/calendar", withAuth, async (req, res, next) => {
+  try {    
+    res.render("calendar", 
+  {
+    logged_in: true,
+    title: "Calendar",
+  });
+  }catch (err) {
+    res.status(500).json(err);
+  }  
+});
+
 router.get("/logout", (req, res) => {
   try {
     res.render("index")

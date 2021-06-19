@@ -55,7 +55,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-white" href="/logout">
+              <a class="button is-white" id="logout" href="/logout">
                 Logout
               </a>
             </div>
@@ -105,6 +105,9 @@
 
     {{{body}}}
     <script src="/js/main.js"></script>
+    {{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
     {{!-- <script src="/js/search.js"></script> --}}
   </body>
 </html>
