@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // Getting references to our form and input
     var signUpForm = $("#signup");
+    var nameInput = $("input#name-input");
     var emailInput = $("input#email-input");
     var passwordInput = $("input#password-input");
     var passwordVerify = $("input#password-check");
@@ -13,62 +14,53 @@ $(document).ready(function() {
     signUpForm.on("submit", function(event) {
       event.preventDefault();
       var userData = {
+        name: nameInput.val().trim(),
         email: emailInput.val().trim().toLowerCase(),
         password: passwordInput.val().trim(),
-        passwordChek: passwordVerify.val().trim()
+        passwordCheck: passwordVerify.val().trim()
       };
+      console.log(userData.name)
       console.log(userData.email);
-      let userCount = "/api/user/count/";
-      userCount += userData.email;
-      console.log(userCount);
-      $.get(userCount).then ( function(result){
-      console.log("searching");
-        console.log(`results:`, result);
-        if (result === 1){
-          modalAlert("That user already exists!");
-        }else{
-          if (!userData.email || !userData.password) {
+      console.log(userData.password);
+      console.log(userData.passwordCheck)
+     
+        if (!userData.email || !userData.password) {
             modalAlert("Please complete user info.");
             return;
           }
-          else if (userData.password !== userData.passwordChek){
+          else if (userData.password !== userData.passwordCheck){
             modalAlert("Passwords do not match!");
-          }else{
+          } else{
             // If we have an email and password, run the signUpUser function
-            signUpUser(userData.email, userData.password, result);
+            signUpUser(userData.email, userData.password, userData.name);
+            console.log(`signup user:`, userData.email, userData.password, userData.name)
             emailInput.val("");
             passwordInput.val("");
+            passwordCheck.val("");
+            nameInput.val("");
           }
   
+        function signUpUser(email, password, name) {
+          $.post("/api/users/signup", {
+            name: name,
+            email: email,
+            password: password
+          })
+            .then(function(data) {
+              console.log(`data:`, data)
+              document.location.replace('/profile');
+              
+            })
+            .catch(function(err) {
+              console.error(err)
+            })
         }
-      });//end of async get
-    });//end of signup click binding
 
-    function signUpUser(email, password, result) {
-      $.post("/api/users/signup", {
-        email: email,
-        password: password
-      })
-        .then(function(data) {
-          console.log(`data:`, data)
-          window.location.replace(data);
-          // eslint-disable-next-line prettier/prettier
-        // If there's an error, handle it by throwing up a bootstrap alert
-        })
-        .catch(handleLoginErr);
-    }
-  
-    function handleLoginErr(err) {
-      $("#alert .msg").text(err.responseJSON);
-      $("#alert").fadeIn(500);
-    }
-  }); //end of doc ready
-  
-  
-    // Does a post to the signup route. If successful, we are redirected to the members page
-    // Otherwise we log any errors
+      });
+    }); 
      
-  
+    // Does a post to the signup route. If successful, we are redirected to the members page
+    // Otherwise we log any errors  
   
   function checkPasswordMatch() {
     var password = $("#password-input").val();

@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Member, User } = require('../models'); 
 const withAuth = require('../utils/auth');
 
-
 router.get("/", (req, res) => {
   try {
     res.render("index", 
@@ -29,13 +28,13 @@ router.get("/new", (req, res) => {
   }  
 });
 
-router.get("/profile", withAuth, (req, res, next) => {
+router.get("/profile", withAuth, async (req, res, next) => {
   try {
-    // const userData = await User.findByPk(req.session.user_id, {
-    //   attributes: { exclude: ['password'] },
-    //   include: [{ model: Member }],
-    // });
-    // const user = userData.get({ plain: true });
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Member }],
+    });
+    const user = userData.get({ plain: true });
     res.render("profile", 
   {
     ...user,
@@ -45,6 +44,15 @@ router.get("/profile", withAuth, (req, res, next) => {
   }catch (err) {
     res.status(500).json(err);
   }  
+});
+
+router.get("/logout", (req, res) => {
+  try {
+    res.render("index")
+    res.redirect("/")
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 router.get("*", (req, res) => {

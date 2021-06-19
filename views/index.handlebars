@@ -14,7 +14,6 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            {{!-- empty footer because it looks nice --}}
           </footer>
         </div>
       </div>
@@ -44,12 +43,12 @@
             <div class="field">
               <label class="label">Password</label>
               <div class="control">
-                <input class="input" type="password" placeholder="Your Password Here" />
+                <input class="input" id="password-input" type="password" placeholder="Your Password Here" />
               </div>
             </div>
             <!-- form submit button -->
             <div>
-              <button class="button is-rounded is-success" type="submit">Log In</button>
+              <a href="/profile"><button class="button is-rounded is-success" type="submit">Log In</button></a>
               <a href="/new" class="button is-rounded" id="createAccount">Create Account</a>
             </div>
           </form>

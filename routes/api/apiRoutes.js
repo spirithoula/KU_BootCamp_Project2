@@ -1,24 +1,26 @@
 const router = require('express').Router();
 const { User } = require('../../models');
-
+//api/users/signup
 router.post('/signup', async (req, res) => {
     try {
       const userData = await User.create({
+        name: req.body.name,
         email: req.body.email,
         password: req.body.password
       });
-  
+      console.log(userData);
       req.session.save(() => {
         req.session.user_id = userData.id;
         req.session.logged_in = true;
-  
+        
         res.status(200).json(userData);
       });
     } catch (err) {
+      console.error(err)
       res.status(400).json(err);
     }
   });
-
+//api/users/login
 router.post('/login', async (req, res) => {
     try {
       const userData = await User.findOne({ where: { email: req.body.email } });
@@ -54,7 +56,9 @@ router.post('/login', async (req, res) => {
   router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
       req.session.destroy(() => {
+        res.redirect('index');
         res.status(204).end();
+        
       });
     } else {
       res.status(404).end();

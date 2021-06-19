@@ -20,6 +20,7 @@ Member.init(
     },
     bio: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     height: {
       type: DataTypes.INTEGER,
@@ -33,13 +34,20 @@ Member.init(
         isUrl: true,
       },
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'project',
+    modelName: 'member',
   }
 );
 
