@@ -23,7 +23,7 @@ $(document).ready(function() {
       console.log(userCount);
       $.get(userCount).then ( function(result){
       console.log("searching");
-        console.log(result);
+        console.log(`results:`, result);
         if (result === 1){
           modalAlert("That user already exists!");
         }else{
@@ -35,7 +35,7 @@ $(document).ready(function() {
             modalAlert("Passwords do not match!");
           }else{
             // If we have an email and password, run the signUpUser function
-            signUpUser(userData.email, userData.password);
+            signUpUser(userData.email, userData.password, result);
             emailInput.val("");
             passwordInput.val("");
           }
@@ -43,16 +43,14 @@ $(document).ready(function() {
         }
       });//end of async get
     });//end of signup click binding
-      
-  
-    // Does a post to the signup route. If successful, we are redirected to the members page
-    // Otherwise we log any errors
-    function signUpUser(email, password) {
-      $.post("/api/signup", {
+
+    function signUpUser(email, password, result) {
+      $.post("/api/users/signup", {
         email: email,
         password: password
       })
         .then(function(data) {
+          console.log(`data:`, data)
           window.location.replace(data);
           // eslint-disable-next-line prettier/prettier
         // If there's an error, handle it by throwing up a bootstrap alert
@@ -67,6 +65,11 @@ $(document).ready(function() {
   }); //end of doc ready
   
   
+    // Does a post to the signup route. If successful, we are redirected to the members page
+    // Otherwise we log any errors
+     
+  
+  
   function checkPasswordMatch() {
     var password = $("#password-input").val();
     var confirmPassword = $("#password-check").val();
@@ -77,10 +80,9 @@ $(document).ready(function() {
     else{
       $("#divCheckPasswordMatch").html("Passwords match.");
     }
-  }
+  };
   
   function modalAlert(text){
     $(".modal h1").html(text + "<br> Please Try Again!");
     $(".modal").toggleClass("is-active");
-  }
-  
+  };  
