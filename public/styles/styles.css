@@ -235,10 +235,10 @@ html {
   
   /* ***************************** */
   /* ********event page modal***** */ 
-    .dog-modal-content{
+    .member-modal-content{
       padding-bottom: 20px;
     }
-    .dog-modal-content h2{
+    .member-modal-content h2{
       font-size: 130%;
     }
     h2 + p{
@@ -265,30 +265,30 @@ html {
     font-family: "Carrois Gothic", sans-serif;
   }
   
-  .dog-meter {
+  .member-meter {
     margin-left: 1em;
     white-space: nowrap;
   }
   
-  .dog-title-item {
+  .member-title-item {
     margin-right: 1em;
     margin-bottom: 1em;
     font-family: "Carrois Gothic", sans-serif;
   }
   
-  .dog-title-item:last-child {
+  .member-title-item:last-child {
     margin-right: 0;
     margin-bottom: 0;
   }
   
-  .dog-title-level {
+  .member-title-level {
     align-items: start;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
   
-  .profile-dog-card {
+  .profile-member-card {
     color: #2a2a2a;
     margin-top: 2em;
   }

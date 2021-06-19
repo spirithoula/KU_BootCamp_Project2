@@ -63,4 +63,91 @@
   </div>
 </div>
 
+<div class="card profile-member-card">
+      <div class="card-content">
+        <div class="content member-title-level">
+          <h2 class="subtitle member-title-item" id="memberSubtitle">Your Member(s)</h2>
+          <button class="button member-title-item" id="addMemberBtn">Add a Member</button>
+        </div>
+        <div class="content" id="memberContent">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<div id="newMemberModal" class="modal">
+  <div class="modal-background" id="memberAddModalBackground"></div>
+  <div class="modal-content">
+    <div class="box">
+      <div class="field">
+        <label class="label">Member's Name</label>
+        <div class="control">
+          <input class="input" type="text" id="memberName" required/>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Member's Gender</label>
+        <div class="control">
+          <select class="select" id="memberGender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Member's Weight (in pounds)</label>
+        <input class="input" type="number" id="memberWeight" required/>
+      </div>
+      <div class="field">
+        <label class="label">member's Bio</label>
+        <input
+          class="input"
+          type="text"
+          placeholder="Tell us about your member!"
+          id="memberBio"
+        />
+      </div>      
+      <button class="button" id="submitMemberBtn">Submit</button>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- profile image modal -->
+<div class="modal" id="profile-image-modal">
+  <div class="modal-background" id="profileImageModalBackground"></div>
+  <div class="modal-content">
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <form id="picture-upload">
+          <div class="field">
+            <div class="file has-name is-fullwidth">
+              <label class="file-label">
+                <input id="pick-file" class="file-input" type="file" name="file" accept="image/*">
+                <span class="file-cta">
+                  <span class="file-icon"><i class="fas fa-upload"></i></span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+                <span id="pick-file-name" class="file-name"></span>
+              </label>
+            </div>
+
+            <p id="upload-feedback" class="help is-danger">The file upload failed.</p>
+          </div>
+
+          <progress id="upload-progress" class="progress is-primary"></progress>
+
+          <div class="field">
+            <div class="control">
+              <button id="picture-upload" class="button is-primary">Upload</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
 
