@@ -2,6 +2,7 @@ const User = require('./User');
 const Member = require('./Member');
 const Event = require('./Event');
 const Location = require('./Location');
+const EventDayTimeLocation = require('./EventDayTimeLocation');
 
 User.hasMany(Member, {
   foreignKey: 'user_id',
@@ -22,4 +23,15 @@ Location.hasMany(Event, {
   onDelete: "CASCADE"
 })
 
-module.exports = { User, Member, Event, Location };
+EventDayTimeLocation.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+  }
+});
+
+EventDayTimeLocation.belongsTo(Location, {
+  foreignKey: "locationId", 
+});
+
+
+module.exports = { User, Member, Event, Location, EventDayTimeLocation };

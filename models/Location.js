@@ -24,4 +24,4 @@ Location.init(
   }
 );
 
-module.exports = Location ;
+module.exports = Location;
