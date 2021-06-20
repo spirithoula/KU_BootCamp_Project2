@@ -27,8 +27,6 @@ modalCloseListener();
     const bio = document.querySelector('#memberBio').value.trim();
     const memberHeight = document.querySelector('#memberHeight').value.trim();
     const memberWeight = document.querySelector('#memberWeight').value.trim();
-
-    console.log(name);
    
   
     if (name && dob && gender && bio && memberHeight && memberWeight) {
