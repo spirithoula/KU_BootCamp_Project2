@@ -86,6 +86,7 @@ router.post('/login', async (req, res) => {
   });
 
   // API Delete new member
+  //api/users/member/id
   router.delete('/member/:id', withAuth, async (req, res) => {
     try {
       const memberData = await Member.destroy({

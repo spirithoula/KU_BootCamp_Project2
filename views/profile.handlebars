@@ -66,30 +66,38 @@
 <div class="card profile-member-card">
       <div class="card-content">
         <div class="content member-title-level">
-          <h2 class="subtitle member-title-item" id="memberSubtitle">Your Member(s)</h2>
+          <h2 class="subtitle member-title-item" id="memberSubtitle">Your Family Member(s)</h2>
           <button class="button member-title-item" id="addMemberBtn">Add a Member</button>
-        </div>
-        <div class="content" id="memberContent">
-           {{#if members.length}}
+      </div>
+      <div class="content" id="memberContent">
+          {{#if members.length}} 
          <div class="col-md-6 member-list">
-        <h3>Current Members:</h3>
+        <h3>Current Family Members:</h3>
 
          {{#each members as |member|}}
-        <div class="row mb-2">
-         <div class="col-md-8">
-        <h4><a href="/member/{{member.id}}">{{member.name}}</a></h4>
-        </div>
-        <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{member.id}}">DELETE</button>
-        </div>
-      </div>
+         <div class="columns memberLevel">
+             <div class="column is-narrow memberPicColumn center-column">
+               <figure class="image is-128x128">
+              <img src="https://bulma.io/images/placeholders/128x128.png">
+            </figure>
+           <button class="button upload-button" data-upload-target-type="member" data-upload-target-id="54">Update</button></div>
+           <div class="column memberInfoColumn">
+             <div class="member-title-level content">
+               <h4 class="member-title-item">{{member.name}}</h4>
+               <button class="button is-danger is-small member-title-item" id="memberDeleteBtn" data-id={{member.id}}>Delete</button>
+               </div>
+               <p>Date of Birth: {{member.dob}}</p>
+               <p>Gender: {{member.gender}}</p>
+               <p>Height (inches): {{member.memberHeight}}</p>
+               <p>Weight (lbs): {{member.memberWeight}}</p>
+               <p>Bio: {{member.bio}}</p>
+               </div>
+         </div>  
+       </div>
        {{/each}}
         </div>
        {{/if}}
-    </div>
-        </div>
-      </div>
-    </div>
+      </div>    
   </div>
 </div>
 <!-- modal -->
@@ -111,6 +119,10 @@
             <option value="female">Female</option>
           </select>
         </div>
+      </div>
+      <div class="field">
+        <label class="label">Member's DOB</label>
+        <input class="input" type="text" id="memberDOB" placeholder="MM/DD/YYYY" required/>
       </div>
       <div class="field">
         <label class="label">Member's Weight (in pounds)</label>
@@ -140,3 +152,8 @@
 
 
 <script src="/js/profile.js"></script>
+
+
+
+        
+           

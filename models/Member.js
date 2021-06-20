@@ -15,6 +15,9 @@ Member.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    dob: {
+      type: DataTypes.STRING,
+    },
     gender: {
       type: DataTypes.STRING,
     },

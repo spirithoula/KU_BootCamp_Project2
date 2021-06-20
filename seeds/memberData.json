@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Luke Brown",
+    "dob": "02/03/1996",
+    "gender": "male",
+    "bio": "Loves to game!",
+    "height": 72,
+    "weight": 195
+  },
+  {
+    "name": "Jenny Brown",
+    "dob": "05/29/1987",
+    "gender": "female",
+    "bio": "Loves to read!",
+    "height": 67,
+    "weight": 121
+  }
+  
+]

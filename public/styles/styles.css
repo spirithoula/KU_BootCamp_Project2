@@ -265,10 +265,7 @@ html {
     font-family: "Carrois Gothic", sans-serif;
   }
   
-  .member-meter {
-    margin-left: 1em;
-    white-space: nowrap;
-  }
+
   
   .member-title-item {
     margin-right: 1em;
@@ -296,25 +293,7 @@ html {
   .profile-title {
     font-family: "Carrois Gothic", sans-serif;
   }
-  
-  .meter-block {
-    border-bottom: .1em solid #dfdfdf;
-    border-left: .1em solid #dfdfdf;
-    border-top: .1em solid #dfdfdf;
-    display: inline-block;
-    padding: 0;
-    text-align: center;
-    width: 1.5em;
-  }
-  
-  .meter-block:last-child {
-    border: .1em solid #dfdfdf;
-    display: inline-block;
-    padding: 0;
-    text-align: center;
-    width: 1.5em;
-  }
-  
+    
   .wrap-level {
     flex-wrap: wrap;
   }
@@ -419,5 +398,9 @@ html {
     text-shadow: none;
   }
 
-
-  
+.content h3, .content p {
+  color: white;
+}
+.content h4 {
+  color: white;
+}
