@@ -1,5 +1,9 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+// const multer = require("multer");
+// const upload = multer({});
+const { User, Member } = require('../../models');
+const withAuth = require('../../utils/auth');
+
 //api/users/signup
 router.post('/signup', async (req, res) => {
     try {
@@ -65,5 +69,41 @@ router.post('/login', async (req, res) => {
     }
   });
 
+
+  // API create new Member
+  //api/users/member
+  router.post('/member', withAuth, async (req, res) => {
+    try {
+      const newMember = await Member.create({
+        ...req.body,
+        user_id: req.session.user_id,
+        });       
+        res.status(200).json(newMember);
+      } catch (err) {
+      console.error(err)
+      res.status(400).json(err);
+    }
+  });
+
+  // API Delete new member
+  router.delete('/member/:id', withAuth, async (req, res) => {
+    try {
+      const memberData = await Member.destroy({
+        where: {
+          id: req.params.id,
+          user_id: req.session.user_id,
+        },
+      });
+  
+      if (!memberData) {
+        res.status(404).json({ message: 'No member found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(memberData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
   module.exports = router;

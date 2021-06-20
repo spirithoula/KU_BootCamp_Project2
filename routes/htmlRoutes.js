@@ -30,14 +30,16 @@ router.get("/new", (req, res) => {
 
 router.get("/profile", withAuth, async (req, res, next) => {
   try {
-    const userData = await User.findByPk(req.session.user_id, {
+    const memberData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
       include: [{ model: Member }],
     });
-    const user = userData.get({ plain: true });
-    res.render("profile", 
-  {
-    ...user,
+
+
+    // Serialize data so the template can read it
+    const members = memberData.get({ plain: true });
+    res.render("profile", {
+    ...members,
     logged_in: true,
     title: "User Profile",
   });
@@ -78,6 +80,17 @@ router.get("*", (req, res) => {
 
 
 //
+function formatDate(dateOnly) {
+  const date = new Date(dateOnly + "T00:00:00");
+  const dateString = date.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    weekday: "long",
+    year: "numeric",
+  });
+  
+  return dateString;
+}
 
 
 module.exports = router;

@@ -70,14 +70,31 @@
           <button class="button member-title-item" id="addMemberBtn">Add a Member</button>
         </div>
         <div class="content" id="memberContent">
+           {{#if members.length}}
+         <div class="col-md-6 member-list">
+        <h3>Current Members:</h3>
+
+         {{#each members as |member|}}
+        <div class="row mb-2">
+         <div class="col-md-8">
+        <h4><a href="/member/{{member.id}}">{{member.name}}</a></h4>
+        </div>
+        <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{member.id}}">DELETE</button>
+        </div>
+      </div>
+       {{/each}}
+        </div>
+       {{/if}}
+    </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <!-- modal -->
-<div id="newMemberModal" class="modal">
-  <div class="modal-background" id="memberAddModalBackground"></div>
+<div class="modal" id="newMemberModal">
+  <div class="modal-background"></div>
   <div class="modal-content">
     <div class="box">
       <div class="field">
@@ -112,47 +129,14 @@
           id="memberBio"
         />
       </div>      
-      <button class="button" id="submitMemberBtn">Submit</button>
+      <button class="button" type="submit" value="Submit" id="submitMemberBtn">Submit</button>
     </div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
 </div>
 
 <!-- profile image modal -->
-<div class="modal" id="profile-image-modal">
-  <div class="modal-background" id="profileImageModalBackground"></div>
-  <div class="modal-content">
-    <div class="modal-card">
-      <section class="modal-card-body">
-        <form id="picture-upload">
-          <div class="field">
-            <div class="file has-name is-fullwidth">
-              <label class="file-label">
-                <input id="pick-file" class="file-input" type="file" name="file" accept="image/*">
-                <span class="file-cta">
-                  <span class="file-icon"><i class="fas fa-upload"></i></span>
-                  <span class="file-label">Choose a file…</span>
-                </span>
-                <span id="pick-file-name" class="file-name"></span>
-              </label>
-            </div>
 
-            <p id="upload-feedback" class="help is-danger">The file upload failed.</p>
-          </div>
-
-          <progress id="upload-progress" class="progress is-primary"></progress>
-
-          <div class="field">
-            <div class="control">
-              <button id="picture-upload" class="button is-primary">Upload</button>
-            </div>
-          </div>
-        </form>
-      </section>
-    </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
-</div>
 
 
 <script src="/js/profile.js"></script>
