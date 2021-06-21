@@ -1,61 +1,98 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
     <title>Ever24</title>
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
+      src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'
+      integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
+      crossorigin='anonymous'
     ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-      crossorigin="anonymous"/>
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Carrois+Gothic" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8"/>
-    <link rel="stylesheet" href="/styles/bulma-tooltip.min.css" media="screen" title="no title" charset="utf-8"/>
-    <script src="/js/calendar.js"></script>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js'
+    ></script>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'
+    ></script>
+
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css'
+    />
+    <link
+      rel='stylesheet'
+      href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
+      integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr'
+      crossorigin='anonymous'
+    />
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css'
+    />
+    <link
+      href='https://fonts.googleapis.com/css?family=Carrois+Gothic'
+      rel='stylesheet'
+    />
+    <link
+      rel='stylesheet'
+      href='/styles/styles.css'
+      media='screen'
+      title='no title'
+      charset='utf-8'
+    />
+    <link
+      rel='stylesheet'
+      href='/styles/bulma-tooltip.min.css'
+      media='screen'
+      title='no title'
+      charset='utf-8'
+    />
+    <script src='/js/calendar.js'></script>
   </head>
 
   <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/profile">
-          <img src="/images/ever24.png"/></a>
-          <div class="level is-mobile" style="margin: 0">
-            <a class="navbar-item button is-rounded is-warning is-inverted is-outlined navButton" href="/calendar"><i class="far fa-calendar-alt"></i></a>
-            <a class="navbar-item button is-rounded is-warning is-inverted is-outlined navButton" href="/profile"><i class="fas fa-user-circle"></i></a>
-            <a class="navbar-item button is-rounded is-warning is-inverted is-outlined navButton" id="searchbutton"><i class="fas fa-search"></i></a>
-          </div>
-
+    <nav class='navbar' role='navigation' aria-label='main navigation'>
+      <div class='navbar-brand'>
+        <a class='navbar-item' href='/profile'>
+          <img src='/images/ever24.png' /></a>
+        <div class='level is-mobile' style='margin: 0'>
+          <a
+            class='navbar-item button is-rounded is-warning is-inverted is-outlined navButton'
+            href='/calendar'
+          ><i class='far fa-calendar-alt'></i></a>
+          <a
+            class='navbar-item button is-rounded is-warning is-inverted is-outlined navButton'
+            href='/profile'
+          ><i class='fas fa-user-circle'></i></a>
+          <a
+            class='navbar-item button is-rounded is-warning is-inverted is-outlined navButton'
+            id='searchbutton'
+          ><i class='fas fa-search'></i></a>
+        </div>
 
         <a
-          role="button"
-          class="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
+          role='button'
+          class='navbar-burger burger'
+          aria-label='menu'
+          aria-expanded='false'
+          data-target='navbarBasicExample'
         >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <span aria-hidden='true'></span>
+          <span aria-hidden='true'></span>
+          <span aria-hidden='true'></span>
         </a>
       </div>
 
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          {{!-- <a class="navbar-item" href="/user/profile">My Profile</a> --}}
-          {{!-- <a class="navbar-item" href="/calendar">Calendar</a> --}}
-          {{!-- <a class="navbar-item" id="searchbutton">Search</a> --}}
+      <div class='navbar-menu'>
+        <div class='navbar-start'>
+          {{! <a class="navbar-item" href="/user/profile">My Profile</a> }}
+          {{! <a class="navbar-item" href="/calendar">Calendar</a> }}
+          {{! <a class="navbar-item" id="searchbutton">Search</a> }}
         </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-white" id="logout" href="/logout">
+        <div class='navbar-end'>
+          <div class='navbar-item'>
+            <div class='buttons'>
+              <a class='button is-white' id='logout' href='/logout'>
                 Logout
               </a>
             </div>
@@ -64,29 +101,33 @@
       </div>
     </nav>
 
-    {{!-- start of modal --}}
-    <div class="modal" id="searchModal">
-      <div class="modal-background" id="search-modal-background"></div>
-      <div class="modal-content">
-        <div class="modal-card">
-          <header class="modal-card-head">
-            {{!-- empty header for looks --}}
+    {{! start of modal }}
+    <div class='modal' id='searchModal'>
+      <div class='modal-background' id='search-modal-background'></div>
+      <div class='modal-content'>
+        <div class='modal-card'>
+          <header class='modal-card-head'>
+            {{! empty header for looks }}
           </header>
-          <section class="modal-card-body" id="searchModalBody">
-            <div class="content">
-              <form id="searchform">
-                <div class="field is-grouped">
+          <section class='modal-card-body' id='searchModalBody'>
+            <div class='content'>
+              <form id='searchform'>
+                <div class='field is-grouped'>
                   <p>
                     <input
-                      id="searchinput"
-                      name="search"
-                      class="input"
-                      type="text"
-                      placeholder="Search for ..."
+                      id='searchinput'
+                      name='search'
+                      class='input'
+                      type='text'
+                      placeholder='Search for ...'
                     />
                   </p>
-                  <p class="control">
-                    <button id="searchbuttonmodal" type="submit" class="button is-info">
+                  <p class='control'>
+                    <button
+                      id='searchbuttonmodal'
+                      type='submit'
+                      class='button is-info'
+                    >
                       Find an Event!
                     </button>
                   </p>
@@ -95,18 +136,18 @@
             </div>
 
           </section>
-          <footer class="modal-card-foot">
-            {{!-- empty modal footer for looks --}}
+          <footer class='modal-card-foot'>
+            {{! empty modal footer for looks }}
           </footer>
         </div>
       </div>
     </div>
-    {{!-- start of modal --}}
+    {{! start of modal }}
 
     {{{body}}}
     {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
-    {{!-- <script src="/js/search.js"></script> --}}
+      <script src='/js/logout.js'></script>
+    {{/if}}
+    {{! <script src="/js/search.js"></script> }}
   </body>
 </html>
