@@ -1,0 +1,45 @@
+
+<div class="modal" id="MedicalModal">
+  <div class="modal-background" id="medicalModalBackground"></div>
+  <div class="modal-content">
+    <div class="box">
+      <div class="field">
+        <label class="label">Physicians</label>
+        <div class="control">
+          <input class="input" type="text" id="memberPhysicians" required/>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Member's Blood Type</label>
+        <div class="control">
+          <select class="select" id="memberBloodType" required>
+            <option value="A+">A(+)</option>
+            <option value="A-">A(-)</option>
+            <option value="B+">B(+)</option>
+            <option value="B-">B(-)</option>
+            <option value="O+">O(+)</option>
+            <option value="O-">O(-)</option>
+            <option value="AB+">AB(+)</option>
+            <option value="AB-">AB(-)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Allergies</label>
+        <input class="input" type="text" id="memberAllergies" placeholder="List any Allergies, N/A if none" required/>
+      </div>
+      <div class="field">
+        <label class="label">Existing Medical Conditions</label>
+        <input class="input" type="text" id="memberConditions" placeholder="N/A if none" required/>
+      </div>
+      <div class="field">
+        <label class="label">Current Prescriptions</label>
+        <input class="input" type="text" id="memberPrescriptions" placeholder="N/A if none" required/>
+      </div>
+      <button class="button" type="submit" value="Submit" id="submitMedicalBtn">Submit</button>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<script src="/js/medical.js"></script>

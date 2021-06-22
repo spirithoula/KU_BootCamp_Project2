@@ -79,11 +79,11 @@ router.post('/signup', async (req, res) => {
   //api/users/member
 
   //member api routes
-  router.get('/api/member/:id', async (req, res) => {
+  router.get('/api/users/member/:id', async (req, res) => {
     try {
       const memberDataId = await Member.findAll({
       where: {
-        UserID: req.params.id
+        user_id: req.params.id
       },
       include: [
         {
@@ -118,28 +118,25 @@ router.post('/signup', async (req, res) => {
   
   router.put('/member/:id', withAuth, async (req, res) => {
     // Calls the update method on the Book model
-    Member.update(
-      {
-        // All the fields you can update and the data attached to the request body.
-        physicians: req.body.physicians,
-        bloodtype: req.body.bloodtype,
-        allergies: req.body.allergies,
-        conditions: req.body.conditions,
-        prescriptions: req.body.prescriptions,
-        
-      },
-      {
-        // Gets the books based on the isbn given in the request parameters
+    console.log(req.params.id);
+    try{
+      const memberData = await Member.update({
         where: {
-          user_id: req.session.user_id,
+          id: req.params.id,
         },
+      });
+
+      if (!memberData) {
+        res.status(404).json({
+          message: "No Member found with this id!"
+        });
+        return;
       }
-    )
-      .then((updatedMember) => {
-        // Sends the updated book as a json response
-        res.json(updatedMember);
-      })
-      .catch((err) => res.json(err));
+
+      res.status(200).json(memberData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
   // API Delete new member
   //api/users/member/id
@@ -148,7 +145,6 @@ router.post('/signup', async (req, res) => {
       const memberData = await Member.destroy({
         where: {          
           id: req.params.id,
-          user_id: req.session.user_id,
         },
       });
   
