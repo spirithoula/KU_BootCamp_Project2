@@ -60,7 +60,6 @@ router.get('/day/:date', withAuth, async (req, res, next) => {
   try {
     res.render('day', {
       logged_in: true,
-      title: 'Day',
     });
   } catch (err) {
     res.status(500).json(err);
@@ -83,6 +82,32 @@ router.get('*', (req, res) => {
     res.status(500).json(err);
   }
 });
+
+function formatEventsForHandlebars(events) {
+  for (let event of events) {
+    event.times = [
+      {
+        name: 'Morning',
+        range: '(7am - 12pm)',
+        // event: park.Events.find((event) => event.time === 'Morning'),
+      },
+      {
+        name: 'Afternoon',
+        range: '(12pm - 6pm)',
+        //event: park.Events.find((event) => event.time === 'Afternoon'),
+      },
+      {
+        name: 'Evening',
+        range: '(6pm - 10pm)',
+        // event: park.Events.find((event) => event.time === 'Evening'),
+      },
+    ];
+
+    //event.Events = null;
+  }
+
+  return events;
+}
 
 //
 function formatDate(dateOnly) {

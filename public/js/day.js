@@ -5,10 +5,4 @@ const currentDate = window.location.href
   .replace(/[#]/g, '');
 console.log(currentDate);
 
-$('#calendar').fullCalendar({
-  defaultView: 'agendaDay',
-  events: [
-    // events go here
-  ],
-  resources: [],
-});
+document.getElementById('title').innerHTML = currentDate;
