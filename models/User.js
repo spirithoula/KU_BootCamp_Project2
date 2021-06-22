@@ -34,6 +34,12 @@ User.init(
         len: [4],
       },
     },
+    profileImage: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      },
+    },
   },
   {
     hooks: {

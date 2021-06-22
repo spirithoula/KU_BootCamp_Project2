@@ -85,13 +85,24 @@
              <div class="member-title-level content">
                <h4 class="member-title-item">{{member.name}}</h4>
                <button class="button is-danger is-small member-title-item" id="memberDeleteBtn" data-id={{member.id}}>Delete</button>
-               </div>
-               <p>Date of Birth: {{member.dob}}</p>
-               <p>Gender: {{member.gender}}</p>
-               <p>Height (inches): {{member.memberHeight}}</p>
-               <p>Weight (lbs): {{member.memberWeight}}</p>
-               <p>Bio: {{member.bio}}</p>
-               </div>
+               <button class="button is-success is-small member-title-item" id="memberMedicalBtn" data-id={{member.id}}>Add Medical Info</button>
+              </div>
+              <div id="boxes">
+                <div id="column1">
+                  <p>Date of Birth: {{member.dob}}</p>
+                  <p>Gender: {{member.gender}}</p>
+                  <p>Height (inches): {{member.height}}</p>
+                  <p>Weight (lbs): {{member.weight}}</p>
+                  <p>Bio: {{member.bio}}</p>
+                </div>
+                 <div id="column2">
+                  <p>Physicians: {{member.physicians}}</p>
+                  <p>Blood Type: {{member.bloodtype}}</p>
+                  <p>Allergies: {{member.allergies}}</p>
+                  <p>Conditions: {{member.conditions}}</p>
+                  <p>Prescriptions: {{member.prescriptions}}</p>
+                </div>              
+            </div>    
          </div>  
        </div>
        {{/each}}
@@ -149,7 +160,84 @@
 
 <!-- profile image modal -->
 
+<div class="modal" id="profile-image-modal">
+  <div class="modal-background" id="profileImageModalBackground"></div>
+  <div class="modal-content">
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <form id="picture-upload">
+          <div class="field">
+            <div class="file has-name is-fullwidth">
+              <label class="file-label">
+                <input id="pick-file" class="file-input" type="file" name="file" accept="image/*">
+                <span class="file-cta">
+                  <span class="file-icon"><i class="fas fa-upload"></i></span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+                <span id="pick-file-name" class="file-name"></span>
+              </label>
+            </div>
 
+            <p id="upload-feedback" class="help is-danger">The file upload failed.</p>
+          </div>
+
+          <progress id="upload-progress" class="progress is-primary"></progress>
+
+          <div class="field">
+            <div class="control">
+              <button id="picture-upload" class="button is-primary">Upload</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+
+<div class="modal" id="MedicalModal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <div class="field">
+        <label class="label">Physicians</label>
+        <div class="control">
+          <input class="input" type="text" id="memberPhysicians" required/>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Member's Blood Type</label>
+        <div class="control">
+          <select class="select" id="memberBloodType" required>
+            <option value="a+">A(+)</option>
+            <option value="a-">A(-)</option>
+            <option value="b+">B(+)</option>
+            <option value="b-">B(-)</option>
+            <option value="O+">O(+)</option>
+            <option value="O-">O(-)</option>
+            <option value="AB+">AB(+)</option>
+            <option value="AB-">AB(-)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Allergies</label>
+        <input class="input" type="text" id="memberAllergies" placeholder="List All Allergies" required/>
+      </div>
+      <div class="field">
+        <label class="label">Existing Medical Conditions</label>
+        <input class="input" type="text" id="memberConditions" placeholder="N/A if none" required/>
+      </div>
+      <div class="field">
+        <label class="label">Current Prescriptions</label>
+        <input class="input" type="text" id="memberPrescriptions" placeholder="N/A if none" required/>
+      </div>
+      <button class="button" type="submit" value="Submit" id="submitMedicalBtn">Submit</button>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
 
 <script src="/js/profile.js"></script>
 

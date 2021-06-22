@@ -1,8 +1,9 @@
 const router = require('express').Router();
-// var aws = require("aws-sdk");
-// const multer = require("multer");
-// const upload = multer({});
-// const path = require("path");
+var aws = require("aws-sdk");
+const fs = require('fs');
+const multer = require("multer");
+const upload = multer({});
+const path = require("path");
 const { User, Member, Event, EventDayTimeLocation, Location } = require('../../models');
 const withAuth = require('../../utils/auth');
 
@@ -114,6 +115,31 @@ router.post('/signup', async (req, res) => {
     }
   });
   
+  router.put('/member', withAuth, async (req, res) => {
+    // Calls the update method on the Book model
+    Member.update(
+      {
+        // All the fields you can update and the data attached to the request body.
+        physicians: req.body.physicians,
+        bloodtype: req.body.bloodtype,
+        allergies: req.body.allergies,
+        conditions: req.body.conditions,
+        prescriptions: req.body.prescriptions,
+        
+      },
+      {
+        // Gets the books based on the isbn given in the request parameters
+        where: {
+          user_id: req.session.user_id,
+        },
+      }
+    )
+      .then((updatedMember) => {
+        // Sends the updated book as a json response
+        res.json(updatedMember);
+      })
+      .catch((err) => res.json(err));
+  });
   // API Delete new member
   //api/users/member/id
   router.delete('/member/:id', withAuth, async (req, res) => {
@@ -152,4 +178,137 @@ router.get('/api/event/active-events', async (req, res) => {
   res.status(400).json(err);
 }
 });
+
+//api/users/ image update
+router.patch(
+  ":id/profile-image",
+  upload.single("file"),
+  (request, response) => {
+    const fileName = generateFileName(request.file.originalname);
+
+    aws.config.update({
+      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
+      secretAccessKey: "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"
+    });  
+
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: 'ever24',
+      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      ContentType: request.file.mimetype,
+      ACL: "public-read",
+      Body: fs.createReadStream(fileName)
+    };
+
+    s3.putObject(s3Params, (error, data) => {
+      if (error) {
+        console.error(error);
+        return response.status(500).end();
+      }
+
+      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+
+      User.update(
+        {
+          profileImage: url
+        },
+        {
+          where: {
+            id: request.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return response.status(500).end();
+          }
+
+          const returnData = {
+            profileImage: url
+          };
+
+          response.write(JSON.stringify(returnData));
+          response.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          response.status(500).end();
+        });
+    });
+  }
+);
+
+//member image update/upload
+//api/users/member/:id/profile-image
+router.patch(
+  "member/:id/profile-image",
+  upload.single("file"),
+  (request, response) => {
+    const fileName = generateFileName(request.file.originalname);
+
+    aws.config.update({
+      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
+      secretAccessKey: "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"
+    });  
+
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: 'ever24',
+      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      ContentType: request.file.mimetype,
+      ACL: "public-read",
+      Body: fs.createReadStream(fileName)
+    };
+
+    s3.putObject(s3Params, (error, data) => {
+      if (error) {
+        console.error(error);
+        return response.status(500).end();
+      }
+
+      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+
+      Member.update(
+        {
+          profileImage: url
+        },
+        {
+          where: {
+            id: request.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return response.status(500).end();
+          }
+
+          const returnData = {
+            profileImage: url
+          };
+
+          response.write(JSON.stringify(returnData));
+          response.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          response.status(500).end();
+        });
+    });
+  }
+);
+
+function generateFileName(originalName) {
+  const alphabet =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+  let id = "";
+  for (let i = 0; i < 21; i++) {
+    const index = Math.floor(64 * Math.random());
+    id += alphabet[index];
+  }
+
+  return id + path.extname(originalName);
+}
+
   module.exports = router;
