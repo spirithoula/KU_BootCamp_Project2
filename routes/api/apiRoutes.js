@@ -102,7 +102,8 @@ router.post('/signup', async (req, res) => {
   }
   });
   // create new member
-  router.post('/member', withAuth, async (req, res) => {
+  //api/users/member/:id
+  router.post('/member/', withAuth, async (req, res) => {
     try {
       const newMember = await Member.create({
         ...req.body,
@@ -115,7 +116,7 @@ router.post('/signup', async (req, res) => {
     }
   });
   
-  router.put('/member', withAuth, async (req, res) => {
+  router.put('/member/:id', withAuth, async (req, res) => {
     // Calls the update method on the Book model
     Member.update(
       {
@@ -310,5 +311,59 @@ function generateFileName(originalName) {
 
   return id + path.extname(originalName);
 }
+
+
+router.get("/search/:input", function(req, res) {
+  console.log(req.params.input, "hit api");
+  var searchInput = req.params.input;
+  var data = {
+    member: [],
+    users: []
+  };
+  User.findAll({
+    where: {
+      name: searchInput
+    },
+    attributes: ["id", "name"],
+    include: [
+      {
+        model: Member,
+        attributes: [
+          "name",
+          "gender",
+          "bio",
+          "weight",
+          "height",
+          "physicians",
+          "bloodtype",
+          "conditions",
+          "profileImage"
+        ]
+      }
+    ]
+  }).then(users => {
+    data.users = users;
+
+    Member.findAll({
+      where: {
+        name: searchInput
+      },
+      include: [
+        {
+          model: User,
+          required: true,
+          attributes: ["name"]
+        }
+      ]
+    }).then(member => {
+      data.member = member;
+
+      res.json(data);
+    });
+  });
+
+  console.log(data);
+});
+//end of module exports
 
   module.exports = router;

@@ -5,29 +5,46 @@ $("#addMemberBtn").click(function() {
 
 $("#memberMedicalBtn").click(function() {
   $("#MedicalModal").toggleClass("is-active");
+  
 });
 
 $("#profileImageModalBackground").click(function() {
   $("#profile-image-modal").toggleClass("is-active");
 });
+
+window.onload=function(){
+  var el = document.querySelector('#submitMemberBtn');
+  if(el) {
+    el.addEventListener('click', newFormHandler);
+  }
+
+  var element = document.querySelector('#memberDeleteBtn');
+  if(element) {
+    element.addEventListener('click', delButtonHandler);
+  }
+
+  var el2 = document.querySelector('#submitMedicalBtn');
+  if(el2) {
+    el2.addEventListener('click', newMedicalHandler);
+  }
+
+};
 // close modal
 
-function modalCloseListener(){
+
   //click action for dismissing modal
   $(".modal-background").click(function() {
     $("#newMemberModal").toggleClass("is-active");
   });  
-};
-function modalCloseMedical(){
 
-  $(".modal-background").click(function() {
+
+
+  $("#medicalModalBackground").click(function() {
     $("#MedicalModal").toggleClass("is-active");
   });
-}
 
-modalCloseListener();
-modalCloseMedical();
-  //
+
+
   const newFormHandler = async (event) => {
     event.preventDefault();
     
@@ -65,10 +82,23 @@ modalCloseMedical();
     const conditions = document.querySelector('#memberConditions').value.trim();
     const prescriptions = document.querySelector('#memberPrescriptions').value.trim();
     
-   
+    if (event.target.hasAttribute('data-id')) {
+      const id = event.target.getAttribute('data-id');
+      console.log(id);
+  
+      // const response = await fetch(`/api/users/member/${id}`, {
+      //   method: 'DELETE',
+      // });
+  
+      // if (response.ok) {
+      //   document.location.replace('/profile');
+      // } else {
+      //   alert('Failed to delete member!');
+      // }
+    }
   
     if (physicians && bloodtype && allergies && conditions && prescriptions) {
-      const response = await fetch(`/api/users/member`, {
+      const response = await fetch(`/api/users/member/:id`, {
         method: 'PUT',
         body: JSON.stringify({ physicians, bloodtype, allergies, conditions, prescriptions }),
         headers: {
@@ -103,25 +133,9 @@ modalCloseMedical();
     }
   };
 
-  window.onload=function(){
-  var el = document.querySelector('#submitMemberBtn');
-  if(el) {
-    el.addEventListener('click', newFormHandler);
-  }
+ 
 
-  var element = document.querySelector('#memberDeleteBtn');
-  if(element) {
-    element.addEventListener('click', delButtonHandler);
-  }
-
-  var el2 = document.querySelector('#submitMedicalBtn');
-  if(el2) {
-    el2.addEventListener('click', newMedicalHandler);
-  }
-
-};
-
-
+//// UPLOAD IMAGE
 $(document).on("click", ".upload-button", (event) => {
   const button = $(event.currentTarget);
 

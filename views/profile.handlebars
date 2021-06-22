@@ -197,7 +197,7 @@
 
 
 <div class="modal" id="MedicalModal">
-  <div class="modal-background"></div>
+  <div class="modal-background" id="medicalModalBackground"></div>
   <div class="modal-content">
     <div class="box">
       <div class="field">
@@ -210,10 +210,10 @@
         <label class="label">Member's Blood Type</label>
         <div class="control">
           <select class="select" id="memberBloodType" required>
-            <option value="a+">A(+)</option>
-            <option value="a-">A(-)</option>
-            <option value="b+">B(+)</option>
-            <option value="b-">B(-)</option>
+            <option value="A+">A(+)</option>
+            <option value="A-">A(-)</option>
+            <option value="B+">B(+)</option>
+            <option value="B-">B(-)</option>
             <option value="O+">O(+)</option>
             <option value="O-">O(-)</option>
             <option value="AB+">AB(+)</option>
@@ -223,7 +223,7 @@
       </div>
       <div class="field">
         <label class="label">Allergies</label>
-        <input class="input" type="text" id="memberAllergies" placeholder="List All Allergies" required/>
+        <input class="input" type="text" id="memberAllergies" placeholder="List any Allergies, N/A if none" required/>
       </div>
       <div class="field">
         <label class="label">Existing Medical Conditions</label>

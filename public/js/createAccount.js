@@ -19,10 +19,7 @@ $(document).ready(function() {
         password: passwordInput.val().trim(),
         passwordCheck: passwordVerify.val().trim()
       };
-      console.log(userData.name)
-      console.log(userData.email);
-      console.log(userData.password);
-      console.log(userData.passwordCheck)
+      
      
         if (!userData.email || !userData.password) {
             modalAlert("Please complete user info.");
