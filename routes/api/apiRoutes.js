@@ -1,15 +1,10 @@
 const router = require('express').Router();
-// var aws = require("aws-sdk");
-// const multer = require("multer");
-// const upload = multer({});
-// const path = require("path");
-const {
-  User,
-  Member,
-  Event,
-  EventDayTimeLocation,
-  Location,
-} = require('../../models');
+var aws = require("aws-sdk");
+const fs = require('fs');
+const multer = require("multer");
+const upload = multer({});
+const path = require("path");
+const { User, Member, Event, EventDayTimeLocation, Location } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //api/users/signup
@@ -100,41 +95,64 @@ router.get('/api/member/:id', async (req, res) => {
     console.error(err);
     res.status(400).json(err);
   }
-});
-// create new member
-router.post('/member', withAuth, async (req, res) => {
-  try {
-    const newMember = await Member.create({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
-    res.status(200).json(newMember);
-  } catch (err) {
-    console.error(err);
-    res.status(400).json(err);
-  }
-});
-
-// API Delete new member
-//api/users/member/id
-router.delete('/member/:id', withAuth, async (req, res) => {
-  try {
-    const memberData = await Member.destroy({
-      where: {
-        id: req.params.id,
+  });
+  // create new member
+  //api/users/member/:id
+  router.post('/member/', withAuth, async (req, res) => {
+    try {
+      const newMember = await Member.create({
+        ...req.body,
         user_id: req.session.user_id,
-      },
-    });
+      });       
+      res.status(200).json(newMember);
+    } catch (err) {
+      console.error(err)
+      res.status(400).json(err);
+    }
+  });
+  
+  router.put('/member/:id', withAuth, async (req, res) => {
+    // Calls the update method on the Book model
+    console.log(req.params.id);
+    try{
+      const memberData = await Member.update({
+        where: {
+          id: req.params.id,
+        },
+      });
 
-    if (!memberData) {
-      res.status(404).json({ message: 'No member found with this id!' });
-      return;
+      if (!memberData) {
+        res.status(404).json({
+          message: "No Member found with this id!"
+        });
+        return;
+      }
+
+      res.status(200).json(memberData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  // API Delete new member
+  //api/users/member/id
+  router.delete('/member/:id', withAuth, async (req, res) => {
+    try {
+      const memberData = await Member.destroy({
+        where: {          
+          id: req.params.id,
+        },
+      });
+  
+      if (!memberData) {
+        res.status(404).json({ message: 'No member found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(memberData);
+    } catch (err) {
+      res.status(500).json(err);
     }
 
-    res.status(200).json(memberData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 // Event API Routes
@@ -151,4 +169,191 @@ router.get('/api/event/active-events', async (req, res) => {
     res.status(400).json(err);
   }
 });
-module.exports = router;
+
+//api/users/ image update
+router.patch(
+  ":id/profile-image",
+  upload.single("file"),
+  (request, response) => {
+    const fileName = generateFileName(request.file.originalname);
+
+    aws.config.update({
+      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
+      secretAccessKey: "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"
+    });  
+
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: 'ever24',
+      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      ContentType: request.file.mimetype,
+      ACL: "public-read",
+      Body: fs.createReadStream(fileName)
+    };
+
+    s3.putObject(s3Params, (error, data) => {
+      if (error) {
+        console.error(error);
+        return response.status(500).end();
+      }
+
+      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+
+      User.update(
+        {
+          profileImage: url
+        },
+        {
+          where: {
+            id: request.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return response.status(500).end();
+          }
+
+          const returnData = {
+            profileImage: url
+          };
+
+          response.write(JSON.stringify(returnData));
+          response.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          response.status(500).end();
+        });
+    });
+  }
+);
+
+//member image update/upload
+//api/users/member/:id/profile-image
+router.patch(
+  "member/:id/profile-image",
+  upload.single("file"),
+  (request, response) => {
+    const fileName = generateFileName(request.file.originalname);
+
+    aws.config.update({
+      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
+      secretAccessKey: "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"
+    });  
+
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: 'ever24',
+      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      ContentType: request.file.mimetype,
+      ACL: "public-read",
+      Body: fs.createReadStream(fileName)
+    };
+
+    s3.putObject(s3Params, (error, data) => {
+      if (error) {
+        console.error(error);
+        return response.status(500).end();
+      }
+
+      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+
+      Member.update(
+        {
+          profileImage: url
+        },
+        {
+          where: {
+            id: request.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return response.status(500).end();
+          }
+
+          const returnData = {
+            profileImage: url
+          };
+
+          response.write(JSON.stringify(returnData));
+          response.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          response.status(500).end();
+        });
+    });
+  }
+);
+
+function generateFileName(originalName) {
+  const alphabet =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+  let id = "";
+  for (let i = 0; i < 21; i++) {
+    const index = Math.floor(64 * Math.random());
+    id += alphabet[index];
+  }
+
+  return id + path.extname(originalName);
+}
+
+
+router.get("/search/:input", function(req, res) {
+  console.log(req.params.input, "hit api");
+  var searchInput = req.params.input;
+  var data = {
+    member: [],
+    users: []
+  };
+  User.findAll({
+    where: {
+      name: searchInput
+    },
+    attributes: ["id", "name"],
+    include: [
+      {
+        model: Member,
+        attributes: [
+          "name",
+          "gender",
+          "bio",
+          "weight",
+          "height",
+          "physicians",
+          "bloodtype",
+          "conditions",
+          "profileImage"
+        ]
+      }
+    ]
+  }).then(users => {
+    data.users = users;
+
+    Member.findAll({
+      where: {
+        name: searchInput
+      },
+      include: [
+        {
+          model: User,
+          required: true,
+          attributes: ["name"]
+        }
+      ]
+    }).then(member => {
+      data.member = member;
+
+      res.json(data);
+    });
+  });
+
+  console.log(data);
+});
+//end of module exports
+
+  module.exports = router;

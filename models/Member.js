@@ -31,6 +31,21 @@ Member.init(
     weight: {
       type: DataTypes.INTEGER,
     },
+    physicians: {
+      type: DataTypes.STRING,
+    },
+    bloodtype: {
+      type: DataTypes.STRING,
+    },
+    allergies: {
+      type: DataTypes.STRING,
+    },
+    conditions: {
+      type: DataTypes.STRING,
+    },
+    prescriptions: {
+      type: DataTypes.STRING,
+    },
     profileImage: {
       type: DataTypes.STRING,
       validate: {
@@ -49,7 +64,6 @@ Member.init(
     sequelize,
     timestamps: false,
     freezeTableName: true,
-    underscored: true,
     modelName: 'member',
   }
 );

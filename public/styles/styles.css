@@ -404,3 +404,18 @@ html {
 .content h4 {
   color: white;
 }
+#boxes {
+  content: "";
+  display: inline-flex;
+  clear: both;
+  float: left;
+  height: auto;
+  width: 100%;
+  padding: 0 10px;
+}
+#column1 {
+  width: 30%;
+}
+#column2 {
+  width: 30%;
+}

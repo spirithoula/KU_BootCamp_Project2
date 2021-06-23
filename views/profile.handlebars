@@ -75,25 +75,7 @@
         <h3>Current Family Members:</h3>
 
          {{#each members as |member|}}
-         <div class="columns memberLevel">
-             <div class="column is-narrow memberPicColumn center-column">
-               <figure class="image is-128x128">
-              <img src="https://bulma.io/images/placeholders/128x128.png">
-            </figure>
-           <button class="button upload-button" data-upload-target-type="member" data-upload-target-id="54">Update</button></div>
-           <div class="column memberInfoColumn">
-             <div class="member-title-level content">
-               <h4 class="member-title-item">{{member.name}}</h4>
-               <button class="button is-danger is-small member-title-item" id="memberDeleteBtn" data-id={{member.id}}>Delete</button>
-               </div>
-               <p>Date of Birth: {{member.dob}}</p>
-               <p>Gender: {{member.gender}}</p>
-               <p>Height (inches): {{member.memberHeight}}</p>
-               <p>Weight (lbs): {{member.memberWeight}}</p>
-               <p>Bio: {{member.bio}}</p>
-               </div>
-         </div>  
-       </div>
+         {{> memberCard}}
        {{/each}}
         </div>
        {{/if}}
@@ -149,7 +131,42 @@
 
 <!-- profile image modal -->
 
+<div class="modal" id="profile-image-modal">
+  <div class="modal-background" id="profileImageModalBackground"></div>
+  <div class="modal-content">
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <form id="picture-upload">
+          <div class="field">
+            <div class="file has-name is-fullwidth">
+              <label class="file-label">
+                <input id="pick-file" class="file-input" type="file" name="file" accept="image/*">
+                <span class="file-cta">
+                  <span class="file-icon"><i class="fas fa-upload"></i></span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+                <span id="pick-file-name" class="file-name"></span>
+              </label>
+            </div>
 
+            <p id="upload-feedback" class="help is-danger">The file upload failed.</p>
+          </div>
+
+          <progress id="upload-progress" class="progress is-primary"></progress>
+
+          <div class="field">
+            <div class="control">
+              <button id="picture-upload" class="button is-primary">Upload</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+{{> addMedicalInfo}}
 
 <script src="/js/profile.js"></script>
 
