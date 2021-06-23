@@ -113,25 +113,28 @@ router.get('/api/member/:id', async (req, res) => {
   
   router.put('/member/:id', withAuth, async (req, res) => {
     // Calls the update method on the Book model
-    console.log(req.params.id);
-    try{
-      const memberData = await Member.update({
+    Member.update(
+      {
+        // All the fields you can update and the data attached to the request body.
+        physicians: req.body.physicians,
+        bloodtype: req.body.bloodtype,
+        allergies: req.body.allergies,
+        conditions: req.body.conditions,
+        prescriptions: req.body.prescriptions,
+
+      },
+      {
+        // Gets the books based on the isbn given in the request parameters
         where: {
-          id: req.params.id,
+          user_id: req.session.user_id,
         },
-      });
-
-      if (!memberData) {
-        res.status(404).json({
-          message: "No Member found with this id!"
-        });
-        return;
       }
-
-      res.status(200).json(memberData);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    )
+      .then((updatedMember) => {
+        // Sends the updated book as a json response
+        res.json(updatedMember);
+      })
+      .catch((err) => res.json(err));
   });
   // API Delete new member
   //api/users/member/id
