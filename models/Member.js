@@ -17,6 +17,7 @@ Member.init(
     },
     dob: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     gender: {
       type: DataTypes.STRING,
@@ -27,9 +28,19 @@ Member.init(
     },
     height: {
       type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: true
+      }
     },
     weight: {
       type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: true
+      }
+    },
+    phone: {
+      type: DataTypes.STRING,
+    allowNull: false,    
     },
     physicians: {
       type: DataTypes.STRING,

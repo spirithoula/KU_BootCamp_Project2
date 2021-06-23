@@ -5,7 +5,8 @@
     "gender": "male",
     "bio": "Loves to game!",
     "height": 72,
-    "weight": 195
+    "weight": 195,
+    "phone": "4023212591"
   },
   {
     "name": "Jenny Brown",
@@ -13,7 +14,8 @@
     "gender": "female",
     "bio": "Loves to read!",
     "height": 67,
-    "weight": 121
+    "weight": 121,
+    "phone": "4023212591"
   }
   
 ]

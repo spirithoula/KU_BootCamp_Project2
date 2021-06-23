@@ -75,11 +75,11 @@ router.post('/logout', (req, res) => {
 //api/users/member
 
 //member api routes
-router.get('/api/member/:id', async (req, res) => {
+router.get('/member/:id', async (req, res) => {
   try {
     const memberDataId = await Member.findAll({
       where: {
-        UserID: req.params.id,
+        id: req.params.id,
       },
       include: [
         {
@@ -292,6 +292,7 @@ router.patch(
   }
 );
 
+// Generate File Name for Upload
 function generateFileName(originalName) {
   const alphabet =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
@@ -305,7 +306,7 @@ function generateFileName(originalName) {
   return id + path.extname(originalName);
 }
 
-
+// Search API
 router.get("/search/:input", function(req, res) {
   console.log(req.params.input, "hit api");
   var searchInput = req.params.input;

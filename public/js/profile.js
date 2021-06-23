@@ -6,20 +6,20 @@ $('#addMemberBtn').click(function () {
   $('#newMemberModal').toggleClass('is-active');
 });
 
+$('#memberModal').click(function () {
+  $('#newMemberModal').toggleClass('is-active');
+});
+
+
 
 $("#profileImageModalBackground").click(function() {
   $("#profile-image-modal").toggleClass("is-active");
 });
 
 
-  $("#medicalModalBackground").click(function() {
-  $("#MedicalModal").toggleClass("is-active");
-});
-
-
  //click action for dismissing modal
- $(".modal-background").click(function() {
-  $("#newMemberModal").toggleClass("is-active");
+ $("#medicalModalBackground").click(function() {
+  $("#MedicalModal").toggleClass("is-active");
 });  
 
 
@@ -51,11 +51,6 @@ window.onload=function(){
       });
     })
   
-  // var el2 = document.querySelectorAll('.memberMedicalBtn');
-  // for (i=0; i < el2.length; i++) {
-  //   el2[i].addEventListener('click', newMedicalHandler);
-  // }
-  
  
 };
 
@@ -68,12 +63,13 @@ window.onload=function(){
     const bio = document.querySelector('#memberBio').value.trim();
     const height = document.querySelector('#memberHeight').value.trim();
     const weight = document.querySelector('#memberWeight').value.trim();
+    const phone = document.querySelector('#memberPhone').value.trim();
    
   
-    if (name && dob && gender && bio && height && weight) {
+    if (name && dob && gender && bio && height && weight && phone) {
       const response = await fetch(`/api/users/member`, {
         method: 'POST',
-        body: JSON.stringify({ name, dob, gender, bio, height, weight }),
+        body: JSON.stringify({ name, dob, gender, bio, height, weight, phone }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -94,11 +90,6 @@ window.onload=function(){
     const allergies = document.querySelector('#memberAllergies').value.trim();
     const conditions = document.querySelector('#memberConditions').value.trim();
     const prescriptions = document.querySelector('#memberPrescriptions').value.trim();
-    
-    // if (event.target.hasAttribute('data-id')) {
-      // const id = event.target.getAttribute('data-id');
-      // console.log(id);
-
     
   
     if (physicians && bloodtype && allergies && conditions && prescriptions) {

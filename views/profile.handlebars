@@ -84,7 +84,7 @@
 </div>
 <!-- modal -->
 <div class="modal" id="newMemberModal">
-  <div class="modal-background"></div>
+  <div class="modal-background" id="memberModal"></div>
   <div class="modal-content">
     <div class="box">
       <div class="field">
@@ -113,6 +113,10 @@
       <div class="field">
         <label class="label">Member's Height (in inches)</label>
         <input class="input" type="number" id="memberHeight" required/>
+      </div>
+      <div class="field">
+        <label class="label">Phone Number:</label>
+        <input class="input" type="text" name="phone" placeholder="555-555-5555" pattern="\d+" id="memberPhone" required/>
       </div>
       <div class="field">
         <label class="label">member's Bio</label>
