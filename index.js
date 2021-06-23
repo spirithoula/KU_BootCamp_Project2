@@ -3,10 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 //configuring the AWS environment
-AWS.config.update({
-    accessKeyId: "AKIARJT2CDNM6U7HJMVC",
-    secretAccessKey: "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"
-  });
+// AWS.config.update({
+//     accessKeyId: 
+//     secretAccessKey:
+//   });
 
 var s3 = new AWS.S3();
 var filePath = "./data/file.txt";

@@ -1,32 +1,34 @@
 $("#searchbutton").click(function() {
     $("#searchModal").toggleClass("is-active");
   });
+  //close modal
   
-  $("#search-modal-background").click(function() {
-    
-    $("#searchModal").toggleClass("is-active");
-  });
 
-  var nameInput = $("input#searchinput")
+ var searchForm = $("#searchform");
+ var nameInput = $("input#searchinput")
+ $("#search-modal-background").click(function() {    
+  $("#searchModal").toggleClass("is-active");
+});
 
-  $("#searchform").on("submit", function(event) {
+  $(searchForm).on("submit", function(event) {
     event.preventDefault();
-
     
-
     var userData = {
-        name: nameInput.val().trim()
+        name: nameInput.val().trim(),
+    };
+    console.log(userData.name);
+    if(userData.name) {
+      searchUser(userData.name)
     }
-
-    if (userData.name = "") {
-        modalAlert("Please input a name to search for.");
-        return;
-      } else{
-       
-        searchUser(userData.name);
+    // if (userData.name = " ") {
+    //     alert("Please input a name to search for.");
+    //     return;
+    //   } else{
+    //    console.log(userData.name)
+    //     searchUser(userData.name);
         
-        nameInput.val("");
-      }
+    //     nameInput.val("");
+    //   }
 
       function searchUser(input) {
         $.get("/api/users/search/" + input)

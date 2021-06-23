@@ -124,9 +124,9 @@ router.get('/api/member/:id', async (req, res) => {
 
       },
       {
-        // Gets the books based on the isbn given in the request parameters
+       
         where: {
-          user_id: req.session.user_id,
+          id: req.params.id,
         },
       }
     )

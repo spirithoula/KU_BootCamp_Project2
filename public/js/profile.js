@@ -1,3 +1,7 @@
+// where we store the data-id for submitting medical info
+let submitMedId;
+
+
 $('#addMemberBtn').click(function () {
   $('#newMemberModal').toggleClass('is-active');
 });
@@ -8,36 +12,50 @@ $("#profileImageModalBackground").click(function() {
 });
 
 
-$("#memberMedicalBtn").click(function() {
-  $("#MedicalModal").toggleClass("is-active");
-  
-});
-
   $("#medicalModalBackground").click(function() {
   $("#MedicalModal").toggleClass("is-active");
 });
+
 
  //click action for dismissing modal
  $(".modal-background").click(function() {
   $("#newMemberModal").toggleClass("is-active");
 });  
 
-// close modal
 
+// close modal
+// NEED TO SELECT ALL BUTTONS, NOT JUST ONE
 window.onload=function(){
   var el = document.querySelector('#submitMemberBtn');
   if(el) {
     el.addEventListener('click', newFormHandler);
   }
+  
 
-  var element = document.querySelector('#memberDeleteBtn');
-  if(element) {
-    element.addEventListener('click', delButtonHandler);
+  var element = document.querySelectorAll('.memberDeleteBtn');
+  for (i=0; i < element.length; i++) {
+    element[i].addEventListener('click', delButtonHandler);
   }
-  var el2 = document.querySelector('#submitMedicalBtn');
-  if(el2) {
-    el2.addEventListener('click', newMedicalHandler);
-  }
+
+  var el3 = document.querySelector('#submitMedicalBtn');  
+    el3.addEventListener('click', newMedicalHandler);
+
+
+    $('.memberMedicalBtn').each(function() {
+      $(this).click(function(event) {
+        $("#MedicalModal").toggleClass("is-active");
+        submitMedId = event.target.getAttribute('data-id');
+         console.log(submitMedId);
+         
+        
+      });
+    })
+  
+  // var el2 = document.querySelectorAll('.memberMedicalBtn');
+  // for (i=0; i < el2.length; i++) {
+  //   el2[i].addEventListener('click', newMedicalHandler);
+  // }
+  
  
 };
 
@@ -78,13 +96,13 @@ window.onload=function(){
     const prescriptions = document.querySelector('#memberPrescriptions').value.trim();
     
     // if (event.target.hasAttribute('data-id')) {
-      const id = event.target.getAttribute('data-id');
-      console.log(id);
+      // const id = event.target.getAttribute('data-id');
+      // console.log(id);
 
     
   
     if (physicians && bloodtype && allergies && conditions && prescriptions) {
-      const response = await fetch(`/api/users/member/${id}`, {
+      const response = await fetch(`/api/users/member/${submitMedId}`, {
         method: 'PUT',
         body: JSON.stringify({ physicians, bloodtype, allergies, conditions, prescriptions }),
         headers: {
@@ -124,80 +142,80 @@ window.onload=function(){
  
 
 // UPLOAD IMAGe
-$(document).on("click", ".upload-button", (event) => {
-  event.stopPropagation();
-  const button = $(event.currentTarget);
+// $(document).on("click", ".upload-button", (event) => {
+//   event.stopPropagation();
+//   const button = $(event.currentTarget);
 
-  uploadTarget = {
-    type: button.data("upload-target-type"),
-    id: button.data("upload-target-id"),
-  };
+//   uploadTarget = {
+//     type: button.data("upload-target-type"),
+//     id: button.data("upload-target-id"),
+//   };
 
-  $("#pick-file").val(null);
-  $("#pick-file-name").text("");
-  $("#upload-feedback").hide();
+//   $("#pick-file").val(null);
+//   $("#pick-file-name").text("");
+//   $("#upload-feedback").hide();
 
-  $("#profile-image-modal").toggleClass("is-active");
-});
+//   $("#profile-image-modal").toggleClass("is-active");
+// });
 
-$("#pick-file").change((event) => {
-  const input = event.currentTarget;
-  if (input.files.length > 0) {
-    $("#pick-file-name").text(input.files[0].name);
-  } else {
-    $("#pick-file-name").text("");
-  }
-});
+// $("#pick-file").change((event) => {
+//   const input = event.currentTarget;
+//   if (input.files.length > 0) {
+//     $("#pick-file-name").text(input.files[0].name);
+//   } else {
+//     $("#pick-file-name").text("");
+//   }
+// });
 
-$("#picture-upload").submit((event) => {
-  event.preventDefault();
+// $("#picture-upload").submit((event) => {
+//   event.preventDefault();
 
-  if ($("#pick-file")[0].files.length === 0) {
-    return;
-  }
+//   if ($("#pick-file")[0].files.length === 0) {
+//     return;
+//   }
 
-  $("#upload-feedback").hide();
-  $("#upload-progress").show();
+//   $("#upload-feedback").hide();
+//   $("#upload-progress").show();
 
-  let apiUrl;
-  switch (uploadTarget.type) {
-    case "user":
-      apiUrl = `/api/users/${userId}/profile-image`;
-      break;
+//   let apiUrl;
+//   switch (uploadTarget.type) {
+//     case "user":
+//       apiUrl = `/api/users/${userId}/profile-image`;
+//       break;
 
-    case "dog":
-      apiUrl = `/api/users/member/${uploadTarget.id}/profile-image`;
-      break;
-  }
+//     case "dog":
+//       apiUrl = `/api/users/member/${uploadTarget.id}/profile-image`;
+//       break;
+//   }
 
-  $.ajax({
-      url: apiUrl,
-      type: "PATCH",
-      data: new FormData(event.currentTarget),
-      cache: false,
-      contentType: false,
-      processData: false,
-      xhr: () => {
-        const myXhr = $.ajaxSettings.xhr();
-        if (myXhr.upload) {
-          myXhr.upload.addEventListener("progress", (event) => {
-              if (event.lengthComputable) {
-                $("#upload-progress").attr({
-                  value: event.loaded,
-                  max: event.total,
-                });
-              }
-            }, false);
-        }
-        return myXhr;
-      },
-    })
-    .then((responseJson) => {
-      location.reload();
-    })
-    .catch((error) => {
-      console.error(error);
-      $("#upload-feedback").show();
-      $("#upload-progress").hide();
-    });
-  });
+//   $.ajax({
+//       url: apiUrl,
+//       type: "PATCH",
+//       data: new FormData(event.currentTarget),
+//       cache: false,
+//       contentType: false,
+//       processData: false,
+//       xhr: () => {
+//         const myXhr = $.ajaxSettings.xhr();
+//         if (myXhr.upload) {
+//           myXhr.upload.addEventListener("progress", (event) => {
+//               if (event.lengthComputable) {
+//                 $("#upload-progress").attr({
+//                   value: event.loaded,
+//                   max: event.total,
+//                 });
+//               }
+//             }, false);
+//         }
+//         return myXhr;
+//       },
+//     })
+//     .then((responseJson) => {
+//       location.reload();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       $("#upload-feedback").show();
+//       $("#upload-progress").hide();
+//     });
+//   });
