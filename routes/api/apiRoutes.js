@@ -9,95 +9,90 @@ const withAuth = require('../../utils/auth');
 
 //api/users/signup
 
-
 router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
     });
-      console.log(userData);
-      req.session.save(() => {
-        req.session.user_id = userData.id;
-        req.session.logged_in = true;
-        
-        res.status(200).json(userData);
-      });
-    } catch (err) {
-      console.error(err)
-      res.status(400).json(err);
-    }
-  });
-  //api/users/login
-  router.post('/login', async (req, res) => {
-    try {
-      const userData = await User.findOne({ where: { email: req.body.email } });
-      
-      if (!userData) {
-        res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-        return;
-      }
-      
-      const validPassword = await userData.checkPassword(req.body.password);
-      
-      if (!validPassword) {
-        res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-        return;
-      }
-      
-      req.session.save(() => {
-        req.session.user_id = userData.id;
-        req.session.logged_in = true;
-        
-        res.json({ user: userData, message: 'You are now logged in!' });
-      });
-      
-    } catch (err) {
-      res.status(400).json(err);
-    }
-  });
-  
-  router.post('/logout', (req, res) => {
-    if (req.session.logged_in) {
-      req.session.destroy(() => {
-        res.redirect("/");
-        res.status(204).end();
-        
-      });
-    } else {
-      res.status(404).end();
-    }
-  });
-  
-  
-  // API create new Member
-  //api/users/member
+    console.log(userData);
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
 
-  //member api routes
-  router.get('/api/users/member/:id', async (req, res) => {
-    try {
-      const memberDataId = await Member.findAll({
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+});
+//api/users/login
+router.post('/login', async (req, res) => {
+  try {
+    const userData = await User.findOne({ where: { email: req.body.email } });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+      return;
+    }
+
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json({ user: userData, message: 'You are now logged in!' });
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.post('/logout', (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.redirect('/');
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
+// API create new Member
+//api/users/member
+
+//member api routes
+router.get('/api/member/:id', async (req, res) => {
+  try {
+    const memberDataId = await Member.findAll({
       where: {
-        user_id: req.params.id
+        UserID: req.params.id,
       },
       include: [
         {
           model: User,
           required: true,
-          attributes: ['name']
-        }
-      ]
-      
+          attributes: ['name'],
+        },
+      ],
     });
     console.log(memberDataId);
     res.status(200).json(memberDataId);
   } catch (err) {
-    console.error(err)
+    console.error(err);
     res.status(400).json(err);
   }
   });
@@ -157,23 +152,22 @@ router.post('/signup', async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-  });
 
- 
- // Event API Routes
+});
+
+// Event API Routes
 router.get('/api/event/active-events', async (req, res) => {
   try {
     const eventData = await EventDayTimeLocation.findAll({
-    attributes: [['date', 'start']],
-    group: ['date']
-    
-  });
-  console.log(eventData);
-  res.status(200).json(eventData);
-} catch (err) {
-  console.error(err)
-  res.status(400).json(err);
-}
+      attributes: [['date', 'start']],
+      group: ['date'],
+    });
+    console.log(eventData);
+    res.status(200).json(eventData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
 });
 
 //api/users/ image update

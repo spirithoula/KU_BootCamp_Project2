@@ -1,6 +1,5 @@
-
-$("#addMemberBtn").click(function() {
-  $("#newMemberModal").toggleClass("is-active");
+$('#addMemberBtn').click(function () {
+  $('#newMemberModal').toggleClass('is-active');
 });
 
 
