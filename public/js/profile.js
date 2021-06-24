@@ -23,10 +23,12 @@ $("#profileImageModalBackground").click(function() {
   $("#MedicalModal").toggleClass("is-active");
 });  
 
+let members = []
+  
 
 
+window.onload= function(){
 
-window.onload=function(){
   var el = document.querySelector('#submitMemberBtn');
   if(el) {
     el.addEventListener('click', newFormHandler);

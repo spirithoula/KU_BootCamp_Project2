@@ -1,0 +1,35 @@
+    {{! start of modal }}
+    <div class='modal' id='searchModal'>
+      <div class='modal-background' id='search-modal-background'></div>
+      <div class='modal-content'>
+        <div class='modal-card'>
+          <header class='modal-card-head'>
+            {{! empty header for looks }}
+          </header>
+          <section class='modal-card-body' id='searchModalBody'>
+            <div class='content'>
+              <form id='searchform'>
+                <div class='field is-grouped'>
+                  <p>
+                    <input
+                      id='searchinput'
+                      name='search'
+                      class='input'
+                      type='text'
+                      placeholder='Search for ...'
+                    />
+                  </p>
+                  <p class='control'>
+                    <button
+                      id='searchbuttonmodal'
+                      type='submit'
+                      class='button is-info'
+                    >
+                      Search for a Member!
+                    </button>
+                  </p>
+                </div>
+              </form>
+            </div>
+
+          </section>

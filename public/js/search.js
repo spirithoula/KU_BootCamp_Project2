@@ -1,45 +1,89 @@
-$("#searchbutton").click(function() {
-    $("#searchModal").toggleClass("is-active");
-  });
-  //close modal
-  
 
- var searchForm = $("#searchform");
- var nameInput = $("input#searchinput")
- $("#search-modal-background").click(function() {    
-  $("#searchModal").toggleClass("is-active");
-});
+
+
+var searchForm = $("#searchform");
+ 
+
 
   $(searchForm).on("submit", function(event) {
     event.preventDefault();
-    
-    var userData = {
-        name: nameInput.val().trim(),
-    };
-    console.log(userData.name);
-    if(userData.name) {
-      searchUser(userData.name)
-    }
-    // if (userData.name = " ") {
-    //     alert("Please input a name to search for.");
-    //     return;
-    //   } else{
-    //    console.log(userData.name)
-    //     searchUser(userData.name);
-        
-    //     nameInput.val("");
-    //   }
+    console.log("clicked");
 
-      function searchUser(input) {
-        $.get("/api/users/search/" + input)
-          .then(function(data) {
-            console.log(`data:`, data)
-            
-            
-          })
-          .catch(function(err) {
-            console.error(err)
-          })
+    var input = $("#searchinput").val().trim();
+     if (input === "") {
+  } else {
+    console.log(input);
+    $.ajax("/api/users/search/" + input, {
+      type: "GET"
+    }).then(function(data) {
+      if (data.members != 0) {
+        var memberCount = $(
+          "<h3 class='subtitle search-title'>Members found: " + data.members + "</h3>"
+        );
+        var memberContainer = $("<div id='memberContainer'></div>");
+        for (x in data.members) {
+          var memberColumns = $("<hr><div class='columns' id='memberColumns'></div>");
+          var memberLeftColumn = $("<div class='column is-narrow'></div>");
+          var memberMiddleColumn = $("<div class='column'></div>");
+          var memberRightColumn = $("<div class='column'></div>");
+          var memberResultName = $("<p>Name: " + data.members[x].name + "</p>");
+          var memberResultGender = $("<p>Gender: " + data.members[x].gender + "</p>");
+          var memberResultBio = $("<p>Bio: " + data.members[x].bio + "</p>");
+          var memberResultWeight = $("<p>Weight: " + data.members[x].weight + "</p>");
+          
+          
+          
+          let profileImage = "https://bulma.io/images/placeholders/128x128.png";
+          if (data.members[x].profileImage) {
+            profileImage = data.members[x].profileImage;
+          }
+          var memberResultPic = $(
+            `<figure class="image is-128x128">
+              <img src="${profileImage}">
+            </figure>`
+          );
+          $(memberLeftColumn).append(memberResultPic);
+          $(memberMiddleColumn).append(
+            memberResultName,
+            memberResultGender,
+            memberResultBio
+          );
+          $(memberRightColumn).append(
+            memberResultWeight,            
+            memberResultOwner
+          );
+          $(memberColumns).append(memberLeftColumn, memberMiddleColumn, memberRightColumn);
+          $(memberContainer).append(memberColumns);
+          $(memberContainer).prepend(memberCount);
+        }
+        $("#searchModalBody").append(memberContainer);
+      } else {
+        var noMembers = $(
+          "<h4 class='subtitle search-title' id='noMembers'>Members found: " +
+            data.members +
+            "</h4>"
+        );
+        $("#searchModalBody").append(noMembers);
       }
+        if (data.members === 0) {
+        console.log('no members');
+      }
+    });
+  }
+});
+   
 
+
+  $("#searchbutton").click(function() {
+    $("#searchModal").toggleClass("is-active");    
+});
+
+
+  $("#search-modal-background").click(function() {    
+    $("#searchModal").toggleClass("is-active");
   });
+
+  //close modal
+  
+
+ 
