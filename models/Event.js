@@ -5,13 +5,15 @@ class Event extends Model {}
 
 Event.init(
   {
+    title: {
+      type: DataTypes.STRING,
+    },
     date: {
-        type: DataTypes.DATEONLY
+      type: DataTypes.DATEONLY,
     },
     time: {
-        type: DataTypes.STRING
-
-    }
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize,

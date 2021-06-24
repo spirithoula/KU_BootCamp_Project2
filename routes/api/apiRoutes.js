@@ -148,24 +148,40 @@ router.get('/member/:id', async (req, res) => {
           id: req.params.id,
         },
       });
-  
-      if (!memberData) {
-        res.status(404).json({ message: 'No member found with this id!' });
-        return;
-      }
-  
-      res.status(200).json(memberData);
-    } catch (err) {
-      res.status(500).json(err);
+      return;
     }
 
+    res.status(200).json(memberData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// API Delete new member
+//api/users/member/id
+router.delete('/member/:id', withAuth, async (req, res) => {
+  try {
+    const memberData = await Member.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!memberData) {
+      res.status(404).json({ message: 'No member found with this id!' });
+      return;
+    }
+
+    res.status(200).json(memberData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // Event API Routes
-router.get('/api/event/active-events', async (req, res) => {
+router.get('/api/event/', async (req, res) => {
   try {
-    const eventData = await EventDayTimeLocation.findAll({
-      attributes: [['date', 'start']],
+    const eventData = await Event.findAll({
+      attributes: [['date', 'title', 'start']],
       group: ['date'],
     });
     console.log(eventData);
@@ -205,7 +221,7 @@ AWS.config.region = "us-east-2";
 
       User.update(
         {
-          profileImage: url
+          profileImage: url,
         },
         {
           where: {
@@ -213,19 +229,19 @@ AWS.config.region = "us-east-2";
           }
         }
       )
-        .then(affectedRows => {
+        .then((affectedRows) => {
           if (affectedRows[0] !== 1) {
             return res.status(500).end();
           }
 
           const returnData = {
-            profileImage: url
+            profileImage: url,
           };
 
           res.write(JSON.stringify(returnData));
           res.end();
         })
-        .catch(reason => {
+        .catch((reason) => {
           console.error(reason);
           res.status(500).end();
         });
@@ -238,7 +254,7 @@ AWS.config.region = "us-east-2";
 
       Member.update(
         {
-          profileImage: url
+          profileImage: url,
         },
         {
           where: {
@@ -246,19 +262,19 @@ AWS.config.region = "us-east-2";
           }
         }
       )
-        .then(affectedRows => {
+        .then((affectedRows) => {
           if (affectedRows[0] !== 1) {
             return res.status(500).end();
           }
 
           const returnData = {
-            profileImage: url
+            profileImage: url,
           };
 
           res.write(JSON.stringify(returnData));
           res.end();
         })
-        .catch(reason => {
+        .catch((reason) => {
           console.error(reason);
           res.status(500).end();
         });
@@ -339,44 +355,44 @@ router.get("/search/:input", function(req, res) {
   var searchInput = req.params.input;
   var data = {
     member: [],
-    users: []
+    users: [],
   };
   User.findAll({
     where: {
-      name: searchInput
+      name: searchInput,
     },
-    attributes: ["id", "name"],
+    attributes: ['id', 'name'],
     include: [
       {
         model: Member,
         attributes: [
-          "name",
-          "gender",
-          "bio",
-          "weight",
-          "height",
-          "physicians",
-          "bloodtype",
-          "conditions",
-          "profileImage"
-        ]
-      }
-    ]
-  }).then(users => {
+          'name',
+          'gender',
+          'bio',
+          'weight',
+          'height',
+          'physicians',
+          'bloodtype',
+          'conditions',
+          'profileImage',
+        ],
+      },
+    ],
+  }).then((users) => {
     data.users = users;
 
     Member.findAll({
       where: {
-        name: searchInput
+        name: searchInput,
       },
       include: [
         {
           model: User,
           required: true,
-          attributes: ["name"]
-        }
-      ]
-    }).then(member => {
+          attributes: ['name'],
+        },
+      ],
+    }).then((member) => {
       data.member = member;
 
       res.json(data);
@@ -387,4 +403,4 @@ router.get("/search/:input", function(req, res) {
 });
 //end of module exports
 
-  module.exports = router;
+module.exports = router;
