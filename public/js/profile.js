@@ -131,7 +131,23 @@ window.onload=function(){
     }
   };
 
- 
+  //update name
+  $("#nameBtn").click(function(event) {
+    user_id = event.target.getAttribute('data-id');
+     console.log(user_id);
+    var newName = $("#nameInput")
+      .val()
+      .trim();
+    var apiURL = `/api/users/name/${user_id}`;
+  
+    $.ajax({
+      url: apiURL,
+      method: "PUT",
+      data: { name: newName }
+    }).then(function() {
+      location.reload();
+    });
+  });
 
 // UPLOAD IMAGE
 $(document).on("click", ".upload-button", (event) => {

@@ -49,10 +49,7 @@ html {
     }
   /* ^^^^^ list of elements for cursor: pointer */
   
-  #nameInput::placeholder {
-    color: red;
-    opacity: 1; /* Firefox */
-  }
+ 
   
   
   .list-group-item {

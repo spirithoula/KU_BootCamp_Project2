@@ -74,6 +74,22 @@ router.post('/logout', (req, res) => {
   }
 });
 
+//update name
+router.put("/name/:id", (req, res) => {
+  User.update(
+    {
+      name: req.body.name
+    },
+    {
+      where: {
+        id: req.params.id
+      }
+    }
+  ).then(name => {
+    res.json(name);
+  });
+});
+
 // API create new Member
 //api/users/member
 
@@ -162,7 +178,7 @@ router.get('/member/:id', async (req, res) => {
 });
 
 // Event API Routes
-router.get('/api/event/active-events', async (req, res) => {
+router.get('/event/active-events', async (req, res) => {
   try {
     const eventData = await EventDayTimeLocation.findAll({
       attributes: [['date', 'start']],
