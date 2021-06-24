@@ -155,23 +155,7 @@ router.get('/member/:id', async (req, res) => {
       })
       .catch((err) => res.json(err));
   });
-  // API Delete new member
-  //api/users/member/id
-  router.delete('/member/:id', withAuth, async (req, res) => {
-    try {
-      const memberData = await Member.destroy({
-        where: {          
-          id: req.params.id,
-        },
-      });
-      return;
-    }
 
-    res.status(200).json(memberData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 // API Delete new member
 //api/users/member/id
 router.delete('/member/:id', withAuth, async (req, res) => {
