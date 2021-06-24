@@ -13,11 +13,17 @@ function getCurrentEvents() {
   $('#calendar').fullCalendar({
     // themeSystem: 'bootstrap4',
     //events: event,
-    selectable: false,
+    selectable: true,
     header: {
       left: 'prev,next today',
       center: 'title',
-      // right: 'month'
+      right: 'month,agendaWeek,agendaDay',
+      editable: true,
+    },
+    events: [], //this is where the data for events gets pulled in for the calendar
+    eventClick: function (event) {
+      $('#successModal').modal('show');
+      $('#successModal .modal-body p').text(event.title);
     },
     dayClick: function (date, view) {
       console.log('clicked ' + date.format());
