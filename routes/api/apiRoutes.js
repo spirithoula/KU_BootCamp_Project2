@@ -7,6 +7,9 @@ const path = require("path");
 const { User, Member, Event, EventDayTimeLocation, Location } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+const S3_KEY = process.env.DB_ACCESS;
+const S3_SECRET = process.env.DB_SECRET;
+
 //api/users/signup
 
 router.post('/signup', async (req, res) => {
@@ -177,8 +180,8 @@ router.get('/api/event/active-events', async (req, res) => {
 AWS.config.region = "us-east-2";    
 
     const s3 = new AWS.S3({
-      accessKeyId: 'AKIARJT2CDNMTETS5WX7',
-      secretAccessKey: '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'
+      accessKeyId: S3_KEY,
+      secretAccessKey: S3_SECRET
     });
 
     const uploadS3 = multer({
