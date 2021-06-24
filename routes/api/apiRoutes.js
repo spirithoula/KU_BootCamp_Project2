@@ -192,6 +192,38 @@ router.get('/event/active-events', async (req, res) => {
   }
 });
 
+// IN DEVELOPMENT
+router.post("/event/attend", (req, res) => {
+  console.log(req.body);
+  EventDayTimeLocation.create({
+    date: req.body.date,
+    time: req.body.time,
+    location_id: req.body.location_id,
+    user_id: req.body.user_id
+  }).then(attendee => {
+    console.log(attendee.dataValues);
+    res.json(attendee);
+  });
+  //end of EventDayTimeLocation create
+});
+
+router.get("/event/current/:date", (req, res) => {
+  EventDayTimeLocation.findAll({
+    where: {
+      date: req.params.date
+    },
+    include: [
+      {
+        model: User,
+        required: true,
+        attributes: ["id"]
+      }
+    ]
+  }).then(response => {
+    res.json(response);
+  });
+}); //end of current events on this date
+
 //api/users/ image update
 AWS.config.region = "us-east-2";    
 

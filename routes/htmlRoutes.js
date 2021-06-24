@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Member, User } = require('../models');
+const { Member, User, Location, Event, EventDayTimeLocation } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
@@ -69,14 +69,38 @@ router.get('/calendar', withAuth, async (req, res, next) => {
   }
 });
 
-router.get('/day/:date', withAuth, async (req, res, next) => {
-  try {
-    res.render('day', {
-      logged_in: true,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+
+router.get('/day/:date', withAuth, (req, res) => {
+  Location
+  .findAll({
+    include: [
+      {
+        model: Event,
+        where: {
+          date: req.params.date,
+        },
+        required: false,
+      },
+    ],
+    order: [
+      ["name", "ASC"],
+    ],
+  })
+  .then((parks) => {
+    if (parks.length > 0) {
+      console.log(parks);
+      parks = formatParksForHandlebars(parks);
+      const date = formatDate(req.params.date);
+
+      res.render("day", {
+        title: date,
+        parks: parks,
+        parksJson: JSON.stringify(parks),
+      });
+    } else {
+      res.status(404).render("404");
+    }
+  });
 });
 
 router.get('/logout', (req, res) => {
@@ -96,33 +120,31 @@ router.get('*', (req, res) => {
   }
 });
 
-function formatEventsForHandlebars(events) {
-  for (let event of events) {
-    event.times = [
+function formatParksForHandlebars(parks) {
+  for (let park of parks) {
+    park.times = [
       {
-        name: 'Morning',
-        range: '(7am - 12pm)',
-        // event: park.Events.find((event) => event.time === 'Morning'),
+        name: "Morning",
+        range: "(7am - 12pm)",
+        
       },
       {
-        name: 'Afternoon',
-        range: '(12pm - 6pm)',
-        //event: park.Events.find((event) => event.time === 'Afternoon'),
+        name: "Afternoon",
+        range: "(12pm - 6pm)",
+        
       },
       {
-        name: 'Evening',
-        range: '(6pm - 10pm)',
-        // event: park.Events.find((event) => event.time === 'Evening'),
+        name: "Evening",
+        range: "(6pm - 10pm)",
+        
       },
     ];
 
-    event.Events = null;
+    park.Event = null;
   }
 
-  return events;
+  return parks;
 }
-
-//
 function formatDate(dateOnly) {
   const date = new Date(dateOnly + 'T00:00:00');
   const dateString = date.toLocaleDateString('en-US', {

@@ -12,7 +12,7 @@ $('#memberModal').click(function () {
 });
 
 
-
+// close modal
 $("#profileImageModalBackground").click(function() {
   $("#profile-image-modal").toggleClass("is-active");
 });
@@ -24,8 +24,8 @@ $("#profileImageModalBackground").click(function() {
 });  
 
 
-// close modal
-// NEED TO SELECT ALL BUTTONS, NOT JUST ONE
+
+
 window.onload=function(){
   var el = document.querySelector('#submitMemberBtn');
   if(el) {

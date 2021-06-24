@@ -1,57 +1,45 @@
-<section class='section'>
-  <div class='container'>
-    <h1 class='title day-title' id='title'></h1>
+<section class="section">
+  <div class="container">
+    <h1 class="title day-title" id="title">{{{title}}}</h1>
 
-    <div class='columns is-3'>
-      <div class='column content'>
-        <div class='card'>
-          <div class='card-content'>
-            <h2 class='title is-4'>Events</h2>
+    <div class="columns is-3">
+      <div class="column content">
+        <div class="card">
+          <div class="card-content">
+            <h2 class="title is-4">Events</h2>
 
-            <ul class='events' id='event-list'>
-              {{#each events as |event|}}
+            <ul class="parks" id="park-list">
+              {{#each parks as |park|}}
                 <li>
-                  <span class='event-name'>{{title}}</span>
+                  <span class="park-name">EVENT NAME{{park.name}}</span>
 
-                  <button
-                    class='button show-on-map'
-                    aria-label='Show on map'
-                    data-event-id='{{event.id}}'
-                  >
-                    <i class='fas fa-map-marker-alt'></i>
+                  <button class="button show-on-map" aria-label="Show on map" data-park-id="{{park.id}}">
+                    <i class="fas fa-map-marker-alt"></i>
                   </button>
 
-                  <ul
-                    class='time-list'
-                    data-event-id='{{event.id}}'
-                    data-event-name='{{event.name}}'
-                  >
+                  <ul class="time-list" data-park-id="{{park.id}}" data-park-name="{{park.name}}">
                     {{#each times as |time|}}
-                      <li class='time {{time.name}}'>
-                        <a
-                          class='time-link'
-                          href='#'
-                          data-time-name='{{time.name}}'
-                        >
-                          <span class='time-name'>{{time.name}}</span>
-                          <span class='time-range'>{{time.range}}</span>
+                      <li class="time {{time.name}}">
+                        <a class="time-link" href="#" data-time-name="{{time.name}}" >
+                          <span class="time-name">{{time.name}}</span>
+                          <span class="time-range">{{time.range}}</span>
                         </a>
                       </li>
                     {{/each}}
                   </ul>
                 </li>
               {{/each}}
-            </ul>
+            </ul>  
           </div>
         </div>
       </div>
 
-      <div class='column'>
-        <div class='card'>
-          <div class='card-content'>
-            <h2 class='title is-4'>Event Location</h2>
-            <div id='map' class='is-fullwidth'>
-              {{! map goes here }}
+      <div class="column">
+        <div class="card">
+          <div class="card-content">
+            <h2 class="title is-4">Event Locations</h2>
+            <div id="map" class="is-fullwidth">
+              {{!-- map goes here --}}
             </div>
           </div>
         </div>
@@ -60,4 +48,8 @@
   </div>
 </section>
 
-<script src='/js/day.js'></script>
+<script>
+  const parks = {{{parksJson}}};
+</script>
+<script src="/js/day.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDaGlFyaTlqi8gx413HZsEpGZWnzjIbQk&callback=initMap"></script>

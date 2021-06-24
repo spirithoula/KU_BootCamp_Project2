@@ -37,6 +37,7 @@ function getCurrentEvents() {
 
       // date = date.format();
       window.location.href = '/day/' + date;
+      
     },
   });
 }

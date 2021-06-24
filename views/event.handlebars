@@ -23,7 +23,7 @@
     <div class="columns">
       <div class="column has-text-centered" id="attendeesColumn">{{!--attendees column--}}
         <div id="attendeesBox">
-          <h2 class="title is-4">Attendees <span id="buttonSwitch"></span></h2>
+          <h2 class="title is-4">Attendees <span id="buttonSwitch"><button class="button is-primary is-small is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Add Your Name" id="attendeeBtn"><i class="fas fa-plus"></i></button></span></h2>
           <ul class="attendee-list">
             {{#each attendee}}
             <li data-user-id="{{this.id}}">

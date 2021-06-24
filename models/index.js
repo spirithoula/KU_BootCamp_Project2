@@ -13,11 +13,11 @@ Member.belongsTo(User, {
   foreignKey: 'user_id',
 });
 
-//Event.belongsTo(Location, {
-//  foreignKey: {
-//    allowNull: false
-//  }
-//})
+Event.belongsTo(Location, {
+ foreignKey: {
+   allowNull: false
+ }
+})
 
 Location.hasMany(Event, {
   onDelete: 'CASCADE',
