@@ -29,7 +29,9 @@ router.get('/new', (req, res) => {
 router.get('/profile', withAuth, async (req, res, next) => {
   try {
     const memberData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
+      attributes: { 
+        include: ["id", "name", "profileImage"],
+        exclude: ['password'] },
       include: [{ model: Member }],
     });
 

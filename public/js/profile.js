@@ -1,5 +1,6 @@
 // where we store the data-id for submitting medical info
 let submitMedId;
+let user_id;
 
 
 $('#addMemberBtn').click(function () {
@@ -133,80 +134,82 @@ window.onload=function(){
  
 
 // UPLOAD IMAGe
-// $(document).on("click", ".upload-button", (event) => {
-//   event.stopPropagation();
-//   const button = $(event.currentTarget);
+$(document).on("click", ".upload-button", (event) => {
+  user_id = event.target.getAttribute('data-id');
+  console.log(user_id);
+  event.stopPropagation();
+  const button = $(event.currentTarget);
 
-//   uploadTarget = {
-//     type: button.data("upload-target-type"),
-//     id: button.data("upload-target-id"),
-//   };
+  uploadTarget = {
+    type: button.data("upload-target-type"),
+    id: button.data("upload-target-id"),
+  };
 
-//   $("#pick-file").val(null);
-//   $("#pick-file-name").text("");
-//   $("#upload-feedback").hide();
+  $("#pick-file").val(null);
+  $("#pick-file-name").text("");
+  $("#upload-feedback").hide();
 
-//   $("#profile-image-modal").toggleClass("is-active");
-// });
+  $("#profile-image-modal").toggleClass("is-active");
+});
 
-// $("#pick-file").change((event) => {
-//   const input = event.currentTarget;
-//   if (input.files.length > 0) {
-//     $("#pick-file-name").text(input.files[0].name);
-//   } else {
-//     $("#pick-file-name").text("");
-//   }
-// });
+$("#pick-file").change((event) => {
+  const input = event.currentTarget;
+  if (input.files.length > 0) {
+    $("#pick-file-name").text(input.files[0].name);
+  } else {
+    $("#pick-file-name").text("");
+  }
+});
 
-// $("#picture-upload").submit((event) => {
-//   event.preventDefault();
+$("#picture-upload").submit((event) => {
+  event.preventDefault();
 
-//   if ($("#pick-file")[0].files.length === 0) {
-//     return;
-//   }
+  if ($("#pick-file")[0].files.length === 0) {
+    return;
+  }
 
-//   $("#upload-feedback").hide();
-//   $("#upload-progress").show();
+  $("#upload-feedback").hide();
+  $("#upload-progress").show();
 
-//   let apiUrl;
-//   switch (uploadTarget.type) {
-//     case "user":
-//       apiUrl = `/api/users/${userId}/profile-image`;
-//       break;
+  let apiUrl;
+  switch (uploadTarget.type) {
+    case "user":
+      apiUrl = `/api/users/${user_id}/profile-image`;
+      break;
 
-//     case "dog":
-//       apiUrl = `/api/users/member/${uploadTarget.id}/profile-image`;
-//       break;
-//   }
+    case "member":
+      apiUrl = `/api/users/member/${user_id}/profile-image`;
+      break;
+  }
 
-//   $.ajax({
-//       url: apiUrl,
-//       type: "PATCH",
-//       data: new FormData(event.currentTarget),
-//       cache: false,
-//       contentType: false,
-//       processData: false,
-//       xhr: () => {
-//         const myXhr = $.ajaxSettings.xhr();
-//         if (myXhr.upload) {
-//           myXhr.upload.addEventListener("progress", (event) => {
-//               if (event.lengthComputable) {
-//                 $("#upload-progress").attr({
-//                   value: event.loaded,
-//                   max: event.total,
-//                 });
-//               }
-//             }, false);
-//         }
-//         return myXhr;
-//       },
-//     })
-//     .then((responseJson) => {
-//       location.reload();
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       $("#upload-feedback").show();
-//       $("#upload-progress").hide();
-//     });
-//   });
+  $.ajax({
+      url: apiUrl,
+      type: "PATCH",
+      data: new FormData(event.currentTarget),
+      cache: false,
+      contentType: false,
+      processData: false,
+      xhr: () => {
+        const myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload) {
+          myXhr.upload.addEventListener("progress", (event) => {
+              if (event.lengthComputable) {
+                $("#upload-progress").attr({
+                  value: event.loaded,
+                  max: event.total,
+                });
+              }
+            }, false);
+        }
+        return myXhr;
+      },
+    })
+    .then((responseJson) => {
+      location.reload();
+    })
+    .catch((error) => {
+      console.error(error);
+      $("#upload-feedback").show();
+      $("#upload-progress").hide();
+    });
+  });

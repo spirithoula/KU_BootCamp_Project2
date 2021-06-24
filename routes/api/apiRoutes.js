@@ -1,8 +1,8 @@
 const router = require('express').Router();
-var aws = require("aws-sdk");
+var AWS = require("aws-sdk");
 const fs = require('fs');
 const multer = require("multer");
-const upload = multer({});
+const multerS3 = require('multer-s3');
 const path = require("path");
 const { User, Member, Event, EventDayTimeLocation, Location } = require('../../models');
 const withAuth = require('../../utils/auth');
@@ -174,33 +174,31 @@ router.get('/api/event/active-events', async (req, res) => {
 });
 
 //api/users/ image update
-router.patch(
-  ":id/profile-image",
-  upload.single("file"),
-  (request, response) => {
-    const fileName = generateFileName(request.file.originalname);
+AWS.config.region = "us-east-2";    
 
-    aws.config.update({
-      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
-      secretAccessKey: "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"
-    });  
+    const s3 = new AWS.S3({
+      accessKeyId: 'AKIARJT2CDNMTETS5WX7',
+      secretAccessKey: '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'
+    });
 
-    const s3 = new aws.S3();
-    const s3Params = {
-      Bucket: 'ever24',
-      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
-      ContentType: request.file.mimetype,
-      ACL: "public-read",
-      Body: fs.createReadStream(fileName)
-    };
+    const uploadS3 = multer({
+      storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: 'ever24',
+        metadata: (req, file, cb) => {
+          cb(null, {fieldName: file.fieldname})
+        },
+        key: (req, file, cb) => {
+          cb(null, Date.now().toString() + '-' + file.originalname)
+        }
+      })
+    });
 
-    s3.putObject(s3Params, (error, data) => {
-      if (error) {
-        console.error(error);
-        return response.status(500).end();
-      }
+    router.patch('/:id/profile-image', uploadS3.single('file'),(req, res) => {
+      console.log("HERE IS THE FILE:", req.file);
 
-      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+      const url = req.file.location;
 
       User.update(
         {
@@ -208,59 +206,32 @@ router.patch(
         },
         {
           where: {
-            id: request.params.id
+            id: req.params.id
           }
         }
       )
         .then(affectedRows => {
           if (affectedRows[0] !== 1) {
-            return response.status(500).end();
+            return res.status(500).end();
           }
 
           const returnData = {
             profileImage: url
           };
 
-          response.write(JSON.stringify(returnData));
-          response.end();
+          res.write(JSON.stringify(returnData));
+          res.end();
         })
         .catch(reason => {
           console.error(reason);
-          response.status(500).end();
+          res.status(500).end();
         });
     });
-  }
-);
 
-//member image update/upload
-//api/users/member/:id/profile-image
-router.patch(
-  "member/:id/profile-image",
-  upload.single("file"),
-  (request, response) => {
-    const fileName = generateFileName(request.file.originalname);
+    router.patch('/member/:id/profile-image', uploadS3.single('file'),(req, res) => {
+      console.log("HERE IS FILE 2:", req.file);
 
-    aws.config.update({
-      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
-      secretAccessKey: "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"
-    });  
-
-    const s3 = new aws.S3();
-    const s3Params = {
-      Bucket: 'ever24',
-      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
-      ContentType: request.file.mimetype,
-      ACL: "public-read",
-      Body: fs.createReadStream(fileName)
-    };
-
-    s3.putObject(s3Params, (error, data) => {
-      if (error) {
-        console.error(error);
-        return response.status(500).end();
-      }
-
-      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+      const url = req.file.location;
 
       Member.update(
         {
@@ -268,29 +239,36 @@ router.patch(
         },
         {
           where: {
-            id: request.params.id
+            id: req.params.id
           }
         }
       )
         .then(affectedRows => {
           if (affectedRows[0] !== 1) {
-            return response.status(500).end();
+            return res.status(500).end();
           }
 
           const returnData = {
             profileImage: url
           };
 
-          response.write(JSON.stringify(returnData));
-          response.end();
+          res.write(JSON.stringify(returnData));
+          res.end();
         })
         .catch(reason => {
           console.error(reason);
-          response.status(500).end();
+          res.status(500).end();
         });
     });
-  }
-);
+
+    
+
+//       const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+
+      
+
+//member image update/upload
+//api/users/member/:id/profile-image
 
 // Generate File Name for Upload
 function generateFileName(originalName) {
