@@ -430,6 +430,11 @@ html {
   max-width: 150px;
 
 }
+#insuranceImage {
+  border-radius: 10px;
+  height: 150px;
+  width: 200px;
+}
 
 .insurance h2, .insurance p {
   text-align: center;
@@ -445,7 +450,7 @@ html {
 .btn-11 {
   border: none;
   background: rgb(251,33,117);
-    background: linear-gradient(0deg, rgb(251,33,117) 0%, rgb(251,33,117) 100%);
+    background: linear-gradient(0deg, rgb(212, 175, 55) 0%, rgb(212, 175, 55) 100%);
     color: #fff;
     overflow: hidden;
 }
