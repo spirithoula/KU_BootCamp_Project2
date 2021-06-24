@@ -1,6 +1,0 @@
-Access Key ID:
-AKIARJT2CDNM6U7HJMVC
-Secret Access Key:
-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
-
-Hi, I am a file uploaded to S3 resource using NodeJS :)
