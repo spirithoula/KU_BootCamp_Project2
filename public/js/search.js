@@ -9,16 +9,22 @@ var searchForm = $("#searchform");
     event.preventDefault();
     console.log("clicked");
 
-    var input = $("#searchinput").val().trim();
-     if (input === "") {
+    var searchInput = $("#searchinput").val().trim();
+     if (searchInput === "") {
+       return;
   } else {
-    console.log(input);
-    $.ajax("/api/users/search/" + input, {
+    console.log(searchInput);
+    var apiURL = `/api/users/search/${searchInput}`;
+
+    $.ajax({
+      url: apiURL,
+      contentType: "application/json; charset=utf-8",
       type: "GET"
     }).then(function(data) {
-      if (data.members != 0) {
+      console.log(data);
+      if (data.members.length !== 0) {
         var memberCount = $(
-          "<h3 class='subtitle search-title'>Members found: " + data.members + "</h3>"
+          "<h3 class='subtitle search-title'>Members found: " + data.members.length + "</h3>"
         );
         var memberContainer = $("<div id='memberContainer'></div>");
         for (x in data.members) {
@@ -50,7 +56,6 @@ var searchForm = $("#searchform");
           );
           $(memberRightColumn).append(
             memberResultWeight,            
-            memberResultOwner
           );
           $(memberColumns).append(memberLeftColumn, memberMiddleColumn, memberRightColumn);
           $(memberContainer).append(memberColumns);

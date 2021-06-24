@@ -112,13 +112,6 @@ router.get('/logout', (req, res) => {
   }
 });
 
-router.get('*', (req, res) => {
-  try {
-    res.render('404');
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 function formatParksForHandlebars(parks) {
   for (let park of parks) {
@@ -167,5 +160,14 @@ router.get('/login', (req, res) => {
 
   res.render('/');
 });
+
+router.get('*', (req, res) => {
+  try {
+    res.render('404');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;
