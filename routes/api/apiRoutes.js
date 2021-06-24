@@ -74,6 +74,22 @@ router.post('/logout', (req, res) => {
   }
 });
 
+//update name
+router.put("/name/:id", (req, res) => {
+  User.update(
+    {
+      name: req.body.name
+    },
+    {
+      where: {
+        id: req.params.id
+      }
+    }
+  ).then(name => {
+    res.json(name);
+  });
+});
+
 // API create new Member
 //api/users/member
 
@@ -178,7 +194,7 @@ router.delete('/member/:id', withAuth, async (req, res) => {
 });
 
 // Event API Routes
-router.get('/api/event/', async (req, res) => {
+router.get('/event/active-events', async (req, res) => {
   try {
     const eventData = await Event.findAll({
       attributes: [['date', 'title', 'start']],

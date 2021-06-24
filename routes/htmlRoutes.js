@@ -47,6 +47,17 @@ router.get('/profile', withAuth, async (req, res, next) => {
   }
 });
 
+router.get('/event/chat', withAuth, async (req, res, next) => {
+  try {
+    res.render('event', {
+      logged_in: true,
+      title: 'Chat',
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get('/calendar', withAuth, async (req, res, next) => {
   try {
     res.render('calendar', {
