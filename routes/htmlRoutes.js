@@ -103,7 +103,7 @@ function formatEventsForHandlebars(events) {
       },
     ];
 
-    //event.Events = null;
+    event.Events = null;
   }
 
   return events;

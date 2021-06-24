@@ -1,10 +1,16 @@
 const router = require('express').Router();
-var aws = require("aws-sdk");
+var aws = require('aws-sdk');
 const fs = require('fs');
-const multer = require("multer");
+const multer = require('multer');
 const upload = multer({});
-const path = require("path");
-const { User, Member, Event, EventDayTimeLocation, Location } = require('../../models');
+const path = require('path');
+const {
+  User,
+  Member,
+  Event,
+  EventDayTimeLocation,
+  Location,
+} = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //api/users/signup
@@ -95,71 +101,70 @@ router.get('/api/member/:id', async (req, res) => {
     console.error(err);
     res.status(400).json(err);
   }
-  });
-  // create new member
-  //api/users/member/:id
-  router.post('/member/', withAuth, async (req, res) => {
-    try {
-      const newMember = await Member.create({
-        ...req.body,
-        user_id: req.session.user_id,
-      });       
-      res.status(200).json(newMember);
-    } catch (err) {
-      console.error(err)
-      res.status(400).json(err);
-    }
-  });
-  
-  router.put('/member/:id', withAuth, async (req, res) => {
-    // Calls the update method on the Book model
-    console.log(req.params.id);
-    try{
-      const memberData = await Member.update({
-        where: {
-          id: req.params.id,
-        },
+});
+// create new member
+//api/users/member/:id
+router.post('/member/', withAuth, async (req, res) => {
+  try {
+    const newMember = await Member.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+    res.status(200).json(newMember);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+});
+
+router.put('/member/:id', withAuth, async (req, res) => {
+  // Calls the update method on the Book model
+  console.log(req.params.id);
+  try {
+    const memberData = await Member.update({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!memberData) {
+      res.status(404).json({
+        message: 'No Member found with this id!',
       });
-
-      if (!memberData) {
-        res.status(404).json({
-          message: "No Member found with this id!"
-        });
-        return;
-      }
-
-      res.status(200).json(memberData);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
-  // API Delete new member
-  //api/users/member/id
-  router.delete('/member/:id', withAuth, async (req, res) => {
-    try {
-      const memberData = await Member.destroy({
-        where: {          
-          id: req.params.id,
-        },
-      });
-  
-      if (!memberData) {
-        res.status(404).json({ message: 'No member found with this id!' });
-        return;
-      }
-  
-      res.status(200).json(memberData);
-    } catch (err) {
-      res.status(500).json(err);
+      return;
     }
 
+    res.status(200).json(memberData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// API Delete new member
+//api/users/member/id
+router.delete('/member/:id', withAuth, async (req, res) => {
+  try {
+    const memberData = await Member.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!memberData) {
+      res.status(404).json({ message: 'No member found with this id!' });
+      return;
+    }
+
+    res.status(200).json(memberData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // Event API Routes
-router.get('/api/event/active-events', async (req, res) => {
+router.get('/api/event/', async (req, res) => {
   try {
-    const eventData = await EventDayTimeLocation.findAll({
-      attributes: [['date', 'start']],
+    const eventData = await Event.findAll({
+      attributes: [['date', 'title', 'start']],
       group: ['date'],
     });
     console.log(eventData);
@@ -172,23 +177,23 @@ router.get('/api/event/active-events', async (req, res) => {
 
 //api/users/ image update
 router.patch(
-  ":id/profile-image",
-  upload.single("file"),
+  ':id/profile-image',
+  upload.single('file'),
   (request, response) => {
     const fileName = generateFileName(request.file.originalname);
 
     aws.config.update({
-      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
-      secretAccessKey: "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"
-    });  
+      accessKeyId: 'AKIARJT2CDNM6U7HJMVC',
+      secretAccessKey: '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',
+    });
 
     const s3 = new aws.S3();
     const s3Params = {
       Bucket: 'ever24',
-      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      Key: 'folder/' + Date.now() + '_' + path.basename(fileName),
       ContentType: request.file.mimetype,
-      ACL: "public-read",
-      Body: fs.createReadStream(fileName)
+      ACL: 'public-read',
+      Body: fs.createReadStream(fileName),
     };
 
     s3.putObject(s3Params, (error, data) => {
@@ -201,27 +206,27 @@ router.patch(
 
       User.update(
         {
-          profileImage: url
+          profileImage: url,
         },
         {
           where: {
-            id: request.params.id
-          }
+            id: request.params.id,
+          },
         }
       )
-        .then(affectedRows => {
+        .then((affectedRows) => {
           if (affectedRows[0] !== 1) {
             return response.status(500).end();
           }
 
           const returnData = {
-            profileImage: url
+            profileImage: url,
           };
 
           response.write(JSON.stringify(returnData));
           response.end();
         })
-        .catch(reason => {
+        .catch((reason) => {
           console.error(reason);
           response.status(500).end();
         });
@@ -232,23 +237,23 @@ router.patch(
 //member image update/upload
 //api/users/member/:id/profile-image
 router.patch(
-  "member/:id/profile-image",
-  upload.single("file"),
+  'member/:id/profile-image',
+  upload.single('file'),
   (request, response) => {
     const fileName = generateFileName(request.file.originalname);
 
     aws.config.update({
-      accessKeyId: "AKIARJT2CDNM6U7HJMVC",
-      secretAccessKey: "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"
-    });  
+      accessKeyId: 'AKIARJT2CDNM6U7HJMVC',
+      secretAccessKey: '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',
+    });
 
     const s3 = new aws.S3();
     const s3Params = {
       Bucket: 'ever24',
-      Key: "folder/"+Date.now()+"_"+path.basename(fileName),
+      Key: 'folder/' + Date.now() + '_' + path.basename(fileName),
       ContentType: request.file.mimetype,
-      ACL: "public-read",
-      Body: fs.createReadStream(fileName)
+      ACL: 'public-read',
+      Body: fs.createReadStream(fileName),
     };
 
     s3.putObject(s3Params, (error, data) => {
@@ -261,27 +266,27 @@ router.patch(
 
       Member.update(
         {
-          profileImage: url
+          profileImage: url,
         },
         {
           where: {
-            id: request.params.id
-          }
+            id: request.params.id,
+          },
         }
       )
-        .then(affectedRows => {
+        .then((affectedRows) => {
           if (affectedRows[0] !== 1) {
             return response.status(500).end();
           }
 
           const returnData = {
-            profileImage: url
+            profileImage: url,
           };
 
           response.write(JSON.stringify(returnData));
           response.end();
         })
-        .catch(reason => {
+        .catch((reason) => {
           console.error(reason);
           response.status(500).end();
         });
@@ -291,9 +296,9 @@ router.patch(
 
 function generateFileName(originalName) {
   const alphabet =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
-  let id = "";
+  let id = '';
   for (let i = 0; i < 21; i++) {
     const index = Math.floor(64 * Math.random());
     id += alphabet[index];
@@ -302,50 +307,49 @@ function generateFileName(originalName) {
   return id + path.extname(originalName);
 }
 
-
-router.get("/search/:input", function(req, res) {
-  console.log(req.params.input, "hit api");
+router.get('/search/:input', function (req, res) {
+  console.log(req.params.input, 'hit api');
   var searchInput = req.params.input;
   var data = {
     member: [],
-    users: []
+    users: [],
   };
   User.findAll({
     where: {
-      name: searchInput
+      name: searchInput,
     },
-    attributes: ["id", "name"],
+    attributes: ['id', 'name'],
     include: [
       {
         model: Member,
         attributes: [
-          "name",
-          "gender",
-          "bio",
-          "weight",
-          "height",
-          "physicians",
-          "bloodtype",
-          "conditions",
-          "profileImage"
-        ]
-      }
-    ]
-  }).then(users => {
+          'name',
+          'gender',
+          'bio',
+          'weight',
+          'height',
+          'physicians',
+          'bloodtype',
+          'conditions',
+          'profileImage',
+        ],
+      },
+    ],
+  }).then((users) => {
     data.users = users;
 
     Member.findAll({
       where: {
-        name: searchInput
+        name: searchInput,
       },
       include: [
         {
           model: User,
           required: true,
-          attributes: ["name"]
-        }
-      ]
-    }).then(member => {
+          attributes: ['name'],
+        },
+      ],
+    }).then((member) => {
       data.member = member;
 
       res.json(data);
@@ -356,4 +360,4 @@ router.get("/search/:input", function(req, res) {
 });
 //end of module exports
 
-  module.exports = router;
+module.exports = router;
