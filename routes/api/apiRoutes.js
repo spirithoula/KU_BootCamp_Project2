@@ -261,28 +261,74 @@ AWS.config.region = "us-east-2";
         });
     });
 
+    router.patch('/member/:id/insurance-image', uploadS3.single('file'),(req, res) => {
+      console.log("HERE IS FILE 3:", req.file);
+
+      const url = req.file.location;
+
+      Member.update(
+        {
+          insuranceCard: url
+        },
+        {
+          where: {
+            id: req.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return res.status(500).end();
+          }
+
+          const returnData = {
+            insuranceCard: url
+          };
+
+          res.write(JSON.stringify(returnData));
+          res.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          res.status(500).end();
+        });
+    });
+
+    router.patch('/:id/insurance-image', uploadS3.single('file'),(req, res) => {
+      console.log("HERE IS FILE 4:", req.file);
+
+      const url = req.file.location;
+
+      Member.update(
+        {
+          insuranceCard: url
+        },
+        {
+          where: {
+            id: req.params.id
+          }
+        }
+      )
+        .then(affectedRows => {
+          if (affectedRows[0] !== 1) {
+            return res.status(500).end();
+          }
+
+          const returnData = {
+            insuranceCard: url
+          };
+
+          res.write(JSON.stringify(returnData));
+          res.end();
+        })
+        .catch(reason => {
+          console.error(reason);
+          res.status(500).end();
+        });
+    });
+
     
 
-//       const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
-
-      
-
-//member image update/upload
-//api/users/member/:id/profile-image
-
-// Generate File Name for Upload
-function generateFileName(originalName) {
-  const alphabet =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-
-  let id = "";
-  for (let i = 0; i < 21; i++) {
-    const index = Math.floor(64 * Math.random());
-    id += alphabet[index];
-  }
-
-  return id + path.extname(originalName);
-}
 
 // Search API
 router.get("/search/:input", function(req, res) {

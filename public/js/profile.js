@@ -133,7 +133,7 @@ window.onload=function(){
 
  
 
-// UPLOAD IMAGe
+// UPLOAD IMAGE
 $(document).on("click", ".upload-button", (event) => {
   user_id = event.target.getAttribute('data-id');
   console.log(user_id);
@@ -179,6 +179,14 @@ $("#picture-upload").submit((event) => {
 
     case "member":
       apiUrl = `/api/users/member/${user_id}/profile-image`;
+      break;
+
+      case "memberInsuranceCard":
+      apiUrl = `/api/users/member/${user_id}/insurance-image`;
+      break;
+
+      case "userInsuranceCard":
+      apiUrl = `/api/users/${user_id}/insurance-image`;
       break;
   }
 

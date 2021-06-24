@@ -63,6 +63,12 @@ Member.init(
         isUrl: true,
       },
     },
+    insuranceCard: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      },
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

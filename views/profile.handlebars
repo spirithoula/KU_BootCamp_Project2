@@ -10,12 +10,12 @@
         <div class="card-content">
           <h2 class="subtitle">Your Info</h2>
           <h2 class="subtitle">{{ name }}</h2>
-          <h2 class="subtitle">Your User ID: {{ id }}</h2>
+          <h4 class="subtitle">User ID: {{ id }}</h4>
           <div class="columns">
             <!-- pic column -->
             <div class="column is-narrow center-column">
               <figure class="image is-128x128">
-                <img id="profile-image" src={{ profileImage }}>
+                <img id="profile-image" class="imageStyle" src={{ profileImage }}>
               </figure>
 
               <button class="button upload-button" data-upload-target-type="user" data-id={{ id }}>Upload Image</button>
@@ -65,7 +65,7 @@
       <div class="card-content">
         <div class="content member-title-level">
           <h2 class="subtitle member-title-item" id="memberSubtitle">Your Family Member(s)</h2>
-          <button class="button member-title-item" id="addMemberBtn">Add a Member</button>
+          <button class="button member-title-item custom-btn btn-11" id="addMemberBtn">Add a Member<div class="dot"></div></button>
       </div>
       <div class="content" id="memberContent">
           {{#if members.length}} 

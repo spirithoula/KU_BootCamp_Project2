@@ -40,6 +40,12 @@ User.init(
         isUrl: true,
       },
     },
+    insuranceCard: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      },
+    },
   },
   {
     hooks: {
