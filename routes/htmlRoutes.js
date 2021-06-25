@@ -111,14 +111,7 @@ router.get('/day/:date', withAuth, async (req, res, next) => {
     res.status(500).json(err);
   }
 });
-router.get('/logout', (req, res) => {
-  try {
-    res.render('index');
-    res.redirect('/');
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+
 
 
 function formatParksForHandlebars(parks) {
