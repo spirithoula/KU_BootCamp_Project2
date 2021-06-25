@@ -70,39 +70,47 @@ router.get('/calendar', withAuth, async (req, res, next) => {
 });
 
 //event page with rendered locations
-router.get('/day/:date', withAuth, (req, res) => {
-  Location
-  .findAll({
-    include: [
-      {
-        model: Event,
-        where: {
-          date: req.params.date,
-        },
-        required: false,
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-    ],
-  })
-  .then((parks) => {
-    if (parks.length > 0) {
-      console.log(parks);
-      parks = formatParksForHandlebars(parks);
-      const date = formatDate(req.params.date);
+// router.get('/day/:date', withAuth, (req, res) => {
+//   Location
+//   .findAll({
+//     include: [
+//       {
+//         model: Event,
+//         where: {
+//           date: req.params.date,
+//         },
+//         required: false,
+//       },
+//     ],
+//     order: [
+//       ["name", "ASC"],
+//     ],
+//   })
+//   .then((parks) => {
+//     if (parks.length > 0) {
+//       console.log(parks);
+//       parks = formatParksForHandlebars(parks);
+//       const date = formatDate(req.params.date);
 
-      res.render("day", {
-        title: date,
-        parks: parks,
-        parksJson: JSON.stringify(parks),
-      });
-    } else {
-      res.status(404).render("404");
-    }
-  });
+//       res.render("day", {
+//         title: date,
+//         parks: parks,
+//         parksJson: JSON.stringify(parks),
+//       });
+//     } else {
+//       res.status(404).render("404");
+//     }
+//   });
+// });
+router.get('/day/:date', withAuth, async (req, res, next) => {
+  try {
+    res.render('day', {      
+      logged_in: true,      
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
-
 router.get('/logout', (req, res) => {
   try {
     res.render('index');
