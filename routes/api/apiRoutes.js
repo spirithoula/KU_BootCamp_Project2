@@ -94,55 +94,8 @@ router.put("/name/:id", (req, res) => {
 //api/users/member
 
 //member api routes
-//api/users/search/:input
-router.get("/search/:input", function(req, res) {
-  console.log(req.params.input, "hit api");
-  var searchInput = req.params.input;
-  var data = {
-    members: [],
-    users: []
-  };
-  User.findAll({
-    where: {
-      name: searchInput
-    },
-    attributes: ["id", "name"],
-    include: [
-      {
-        model: Member,
-        attributes: [
-          "name",
-          "gender",
-          "bio",
-          "weight",
-          "height"
-        ]
-      }
-    ]
-  }).then(users => {
-    data.users = users;
 
-    Member.findAll({
-      where: {
-        name: searchInput
-      },
-      include: [
-        {
-          model: User,
-          required: true,
-          attributes: ["name"]
-        }
-      ]
-    }).then(members => {
-      data.members = members;
 
-      res.json(data);
-    });
-  });
-
-  console.log(data);
-});
-//end of module exports
 
 router.get('/member/:id', async (req, res) => {
   try {
@@ -242,7 +195,7 @@ router.get('/event/active-events', async (req, res) => {
   }
 });
 
-// IN DEVELOPMENT
+// IN DEVELOPMENT /////////
 router.post("/event/attend", (req, res) => {
   console.log(req.body);
   EventDayTimeLocation.create({
@@ -431,51 +384,105 @@ AWS.config.region = "us-east-2";
     
 
 
-// Search API
+// // Search API
+// router.get("/search/:input", function(req, res) {
+//   console.log(req.params.input, "hit api");
+//   var searchInput = req.params.input;
+//   var data = {
+//     member: [],
+//     users: [],
+//   };
+//   User.findAll({
+//     where: {
+//       name: searchInput,
+//     },
+//     attributes: ['id', 'name'],
+//     include: [
+//       {
+//         model: Member,
+//         attributes: [
+//           'name',
+//           'gender',
+//           'bio',
+//           'weight',
+//           'height',
+//           'physicians',
+//           'bloodtype',
+//           'conditions',
+//           'profileImage',
+//         ],
+//       },
+//     ],
+//   }).then((users) => {
+//     data.users = users;
+
+//     Member.findAll({
+//       where: {
+//         name: searchInput,
+//       },
+//       include: [
+//         {
+//           model: User,
+//           required: true,
+//           attributes: ['name'],
+//         },
+//       ],
+//     }).then((member) => {
+//       data.member = member;
+
+//       res.json(data);
+//     });
+//   });
+
+//   console.log(data);
+// });
+//end of module exports
+//api/users/search/:input
 router.get("/search/:input", function(req, res) {
   console.log(req.params.input, "hit api");
   var searchInput = req.params.input;
   var data = {
-    member: [],
-    users: [],
+    members: [],
+    users: []
   };
   User.findAll({
     where: {
-      name: searchInput,
+      name: searchInput
     },
-    attributes: ['id', 'name'],
+    attributes: ["id", "name", "profileImage"],
     include: [
       {
         model: Member,
         attributes: [
-          'name',
-          'gender',
-          'bio',
-          'weight',
-          'height',
+          "name",
+          "gender",
+          "bio",
+          "weight",
+          "height",
           'physicians',
           'bloodtype',
           'conditions',
-          'profileImage',
-        ],
-      },
-    ],
-  }).then((users) => {
+          'prescriptions',
+          'profileImage'
+        ]
+      }
+    ]
+  }).then(users => {
     data.users = users;
 
     Member.findAll({
       where: {
-        name: searchInput,
+        name: searchInput
       },
       include: [
         {
           model: User,
           required: true,
-          attributes: ['name'],
-        },
-      ],
-    }).then((member) => {
-      data.member = member;
+          attributes: ["name"]
+        }
+      ]
+    }).then(members => {
+      data.members = members;
 
       res.json(data);
     });
@@ -483,6 +490,4 @@ router.get("/search/:input", function(req, res) {
 
   console.log(data);
 });
-//end of module exports
-
 module.exports = router;
