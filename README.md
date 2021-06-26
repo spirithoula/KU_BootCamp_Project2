@@ -1,16 +1,12 @@
-# KU_BootCamp_Project2
-
-## Your Task
+# Project #2 Ever24
 
 ## User Story
 
-```md
-AS A family member (a parent or guardian)
-I WANT to keep track of my loved one's events/daily activities/ medical information
-SO THAT we have instant connection and communication with each other, as well as 911/EMT's/Fire services
-```
+Our Ever24 app is a panic app solution for instant connection and communications for families. The Ever24 platform is an All-In-One panic application portal. With our design, you can input and track all your family member's information into user profiles. These profiles are designed to efficiently and effectively communicate information if there is a panic situation.
 
 ## Acceptance Criteria
+
+Our app includes the following acceptance criteria:
 
 ```md
 GIVEN a functional Express.js API
@@ -37,20 +33,22 @@ THEN I am routed to the event with a chat box functionality to communicate with 
 WHEN I click on my profile page
 THEN I am given a drop down menu that lists all of my own event's that are scheduled
 ```
+## Link to Deployed Application
 
-MVP:
+Deployed Application via Heroku: https://ever24.herokuapp.com/
 
-1.Authentication/Login (Passport/Bcrypt)
-1a.Polished UI
-2.Individual user accounts with the family users associated
-3.Calendar show currently booked events from family members or other users
-4.-Specific Times/ Specific Days/ Selected Place
-5.Chat Messaging
-6.using .env file for sensitive info 7.
+## Screenshot
 
-//node mailer
-//firebase
-//web sockets
-//twilio-TTS
+![screenshot of deployed app](./public/images/screenshot.png)
 
-//custom roles-permissions according to that role
+
+## Collaborators
+Group 3: Ever24
+
+Travis Brown @ https://github.com/bergannation
+
+Adam Maresch @ https://github.com/amaresch52
+
+Alex Harrington @ https://github.com/spirithoula
+
+Stephanie Rice @ https://github.com/minnie1883
