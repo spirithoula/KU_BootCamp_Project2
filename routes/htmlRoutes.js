@@ -70,33 +70,33 @@ router.get('/calendar', withAuth, async (req, res, next) => {
 });
 
 //event page with rendered locations
-router.get('/day/:date', withAuth, (req, res, next) => {
-  Location
-  .findAll({
-    include: [
-      {
-        model: Event,
-        where: {
-          date: req.params.date
-        },
-        required: false,
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-    ],
-  })
-  .then((parks) => {
-      console.log(parks);
-      parks = formatParksForHandlebars(parks);
-      const date = formatDate(req.params.date);
+// router.get('/day/:date', withAuth, (req, res, next) => {
+//   Location
+//   .findAll({
+//     include: [
+//       {
+//         model: Event,
+//         where: {
+//           date: req.params.date
+//         },
+//         required: false,
+//       },
+//     ],
+//     order: [
+//       ["name", "ASC"],
+//     ],
+//   })
+//   .then((parks) => {
+//       console.log(parks);
+//       parks = formatParksForHandlebars(parks);
+//       const date = formatDate(req.params.date);
 
-      res.render("day", {
-        title: date,
-        parks: parks
-      });
-  });
-});
+//       res.render("day", {
+//         title: date,
+//         parks: parks
+//       });
+//   });
+// });
 
 
 // router.get('/day/:date', withAuth, async (req, res, next) => {
@@ -124,15 +124,15 @@ router.get('/day/:date', withAuth, (req, res, next) => {
 //     res.status(500).json(err);
 //   }
 // });
-// router.get('/day/:date', withAuth, async (req, res, next) => {
-//   try {
-//     res.render('day', {      
-//       logged_in: true,      
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.get('/day/:date', withAuth, async (req, res, next) => {
+  try {
+    res.render('day', {      
+      logged_in: true,      
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 
