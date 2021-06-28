@@ -61,7 +61,7 @@ function initMap() {
   setUpShowOnMapButtons();
 }
 
-function getTodayslocations(){
+function getTodaysLocations(){
   let route = "/api/users/event/current/";
   route += currentDate;
   $.get(route).then(data => {
@@ -109,7 +109,7 @@ function updateClasses(data){
 $(document).ready(function(){
   // console.log(window.location.href);
   listItemClick();
-  // getTodayslocations();
+  getTodaysLocations();
 
   // checks to see if the user had entered the page using the back button - if so it refreshes the page to keep active locations updated
   if(performance.navigation.type == 2){

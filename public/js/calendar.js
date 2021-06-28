@@ -9,6 +9,7 @@
 //  });
 //});
 function getCurrentEvents() {
+
   // console.log(response);
   $('#calendar').fullCalendar({
     // themeSystem: 'bootstrap4',
@@ -21,10 +22,10 @@ function getCurrentEvents() {
       editable: true,
     },
     events: [], //this is where the data for events gets pulled in for the calendar
-    eventClick: function (event) {
-      $('#successModal').modal('show');
-      $('#successModal .modal-body p').text(event.title);
-    },
+    // eventClick: function (event) {
+    //   $('#successModal').modal('show');
+    //   $('#successModal .modal-body p').text(event.title);
+    // },
     dayClick: function (date, view) {
       console.log('clicked ' + date.format());
       date = date.format();
@@ -41,6 +42,7 @@ function getCurrentEvents() {
     },
   });
 }
+
 
 $(document).ready(function () {
   getCurrentEvents();

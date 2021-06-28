@@ -73,18 +73,14 @@ router.get('/calendar', withAuth, async (req, res, next) => {
 // router.get('/day/:date', withAuth, (req, res) => {
 //   Location
 //   .findAll({
+//     where: {
+//       date: req.params.date
+//     },
 //     include: [
 //       {
-//         model: Event,
-//         where: {
-//           date: req.params.date,
-//         },
-//         required: false,
+//         model: Event
 //       },
-//     ],
-//     order: [
-//       ["name", "ASC"],
-//     ],
+//     ]
 //   })
 //   .then((parks) => {
 //     if (parks.length > 0) {

@@ -383,61 +383,7 @@ AWS.config.region = "us-east-2";
 
     
 
-
-// // Search API
-// router.get("/search/:input", function(req, res) {
-//   console.log(req.params.input, "hit api");
-//   var searchInput = req.params.input;
-//   var data = {
-//     member: [],
-//     users: [],
-//   };
-//   User.findAll({
-//     where: {
-//       name: searchInput,
-//     },
-//     attributes: ['id', 'name'],
-//     include: [
-//       {
-//         model: Member,
-//         attributes: [
-//           'name',
-//           'gender',
-//           'bio',
-//           'weight',
-//           'height',
-//           'physicians',
-//           'bloodtype',
-//           'conditions',
-//           'profileImage',
-//         ],
-//       },
-//     ],
-//   }).then((users) => {
-//     data.users = users;
-
-//     Member.findAll({
-//       where: {
-//         name: searchInput,
-//       },
-//       include: [
-//         {
-//           model: User,
-//           required: true,
-//           attributes: ['name'],
-//         },
-//       ],
-//     }).then((member) => {
-//       data.member = member;
-
-//       res.json(data);
-//     });
-//   });
-
-//   console.log(data);
-// });
-//end of module exports
-//api/users/search/:input
+// SEARCH API
 router.get("/search/:input", function(req, res) {
   console.log(req.params.input, "hit api");
   var searchInput = req.params.input;
