@@ -57,12 +57,12 @@ function initMap() {
 
   infoWindow = new google.maps.InfoWindow();
 
-  addLocationsToMap(parks);
-  setUpShowOnMapButtons();
+  
+  
 }
 
 function getTodaysLocations(){
-  let route = "/api/users/event/current/";
+  let route = "/api/users/day/";
   route += currentDate;
   $.get(route).then(data => {
     console.log("Todays locations");
@@ -109,8 +109,9 @@ function updateClasses(data){
 $(document).ready(function(){
   // console.log(window.location.href);
   listItemClick();
-  getTodaysLocations();
-
+  // getTodaysLocations();
+  // addLocationsToMap(parks);
+  setUpShowOnMapButtons();
   // checks to see if the user had entered the page using the back button - if so it refreshes the page to keep active locations updated
   if(performance.navigation.type == 2){
     location.reload(true);

@@ -13,6 +13,9 @@ Location.init(
     },
     lon: {
       type: DataTypes.DECIMAL(10, 7),
+  },
+    date: {
+    type: DataTypes.DATEONLY,
   }
   },
   {

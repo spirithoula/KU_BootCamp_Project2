@@ -1,26 +1,7 @@
 [
   {
-    "title": "Concert",
-    "start": "2021-06-24"
-  },
-  {
-    "title": "Vacation",
-    "start": "2021-06-25"
-  },
-  {
-    "title": "Event",
-    "start": "2021-06-26"
-  },
-  {
-    "title": "Event",
-    "start": "2021-06-29"
-  },
-  {
-    "title": "Event",
-    "start": "2021-06-30"
-  },
-  {
-    "title": "Event",
-    "start": "2021-07-03"
+    "name": "Barker Field",
+    "lat": 37.5391116,
+    "lon": -77.4842119
   }
 ]
