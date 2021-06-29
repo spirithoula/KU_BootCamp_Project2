@@ -70,60 +70,63 @@ router.get('/calendar', withAuth, async (req, res, next) => {
 });
 
 //event page with rendered locations
-router.get('/day/:date', withAuth, async (req, res, next) => {
-  await Location
-  .findAll({
-    include: [
-      {
-        model: Event,
-        where: {
-          date: req.params.date
-        },
-        required: false,
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-    ],
-  })
-  .then((parks) => {
-      console.log(parks);
-      parks = formatParksForHandlebars(parks);
-      const date = formatDate(req.params.date);
-
-      res.render("day", {
-        title: date,
-        parks: parks
-      });
-  });
-});
-
-
 // router.get('/day/:date', withAuth, async (req, res, next) => {
-//   try {
-//     const locationData = await Event.findAll({
-//       where: {
-//         date: req.params.date 
-//       },
-//       include: [
-//         {
-//           model: Location
+//   await Location
+//   .findAll({
+//     include: [
+//       {
+//         model: Event,
+//         where: {
+//           date: req.params.date
 //         },
-//       ],
-      
-//     });
+//         required: false,
+//       },
+//     ],
+//     order: [
+//       ["name", "ASC"],
+//     ],
+//   })
+//   .then((parks) => {
+//       console.log(parks);
+//       parks = formatParksForHandlebars(parks);
+//       const date = formatDate(req.params.date);
 
-//     // Serialize data so the template can read it
-//     const parks = locationData.map((park) => park.get({ plain: true }));
-//     res.render('day', {
-//       parks,
-//       logged_in: true,
-//       title: "Events",
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
+//       res.render("day", {
+//         title: date,
+//         parks: parks
+//       });
+//   });
 // });
+
+
+router.get('/day/:date', withAuth, async (req, res, next) => {
+  try {
+    const locationData = await Location.findAll({      
+      include: [
+        {
+          model: Event,
+          where: {
+            date: req.params.date 
+          },
+          required: false,
+        },
+      ],      
+    });
+
+    // Serialize data so the template can read it
+    const parks = locationData.map((park) => park.get({ plain: true }));
+    const date = formatDate(req.params.date);
+    formatParksForHandlebars(parks);
+
+    res.render('day', {
+      parks,
+      logged_in: true,
+      title: date,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 // router.get('/day/:date', withAuth, async (req, res, next) => {
 //   try {
 //     res.render('day', {      
