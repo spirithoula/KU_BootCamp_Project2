@@ -134,6 +134,9 @@ router.get('/day/:date', withAuth, async (req, res, next) => {
   }
 });
 
+router.get('/seeds', (req, res) => {
+  res.render('seeds', {title: "Seed Page"})
+})
 
 
 function formatParksForHandlebars(parks) {

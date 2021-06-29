@@ -436,4 +436,18 @@ router.get("/search/:input", function(req, res) {
 
   console.log(data);
 });
+
+
+router.post("/location/seeds", (req, res) => {
+  console.log(req.body);
+  Location.create({
+    name: req.body.name,
+    lat: req.body.lat,
+    lon: req.body.lon
+  }).then(location => {
+    res.json(location);
+  });
+});
+
+
 module.exports = router;
