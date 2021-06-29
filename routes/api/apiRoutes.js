@@ -449,5 +449,19 @@ router.post("/location/seeds", (req, res) => {
   });
 });
 
+router.get("/location/:id?", (req, res) => {
+  if (req.params.id) {
+    Location.findOne({
+      where: { id: req.params.id }
+    }).then(location => {
+      res.json(location);
+    });
+  } else {
+    Location.findAll().then(locations => {
+      res.json(locations);
+    });
+  }
+}); //end of location get
+
 
 module.exports = router;
