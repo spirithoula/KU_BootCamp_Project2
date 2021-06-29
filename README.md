@@ -4,6 +4,11 @@
 
 Our Ever24 app is a medical app solution for instant connection and communications for families. The Ever24 platform is an All-In-One medical application portal. With our design, you can input and track all your family member's information into user profiles. These profiles are designed to efficiently and effectively communicate information if there is a medical situation.
 
+```md
+AS A family member (a parent or guardian)
+I WANT to keep track of my loved one's events/daily activities/ medical information
+SO THAT we have instant connection and communication with each other
+```
 ## Acceptance Criteria
 
 Our app includes the following acceptance criteria:
@@ -99,6 +104,43 @@ The following are images showing the app's functionality and features:
 ## Tests
 
 Testing: no testing is required
+
+
+## Technologies Used:
+
+1. Bulma
+Responsive CSS Framework
+Relatively Easy to use classes
+2. Jquery
+Easy access to the DOM for manipulation of screen content
+3. Handlebars Templating
+Easy templating engine
+4. MySQL/Sequelize
+JS style access to MySQL database
+5. Express/Node.JS
+for HTML routing and API queries
+6. bcrypt.js
+Password protected user data
+Middleware to verify user authentication before allowing access to various HTML routes
+bcrypt.js to hash passwords before entering them into the database
+7. Amazon AWS S3/Multer
+Due to issues with storing images on Heroku, we upload our images to Amazon for file storage
+8. FullCalendar API
+API Rendering calendar functionality
+9. DotENV
+Protect API keys and sensitive information
+
+Future: 
+Firebase
+Real Time database for instant chat messages
+
+## Future Development
+
+
+1. Searching members and owners and which locations and events they are signed up for
+2. Private Messaging
+3. More robust authentication
+4. React based front-end
 
 
 ## Collaborators
