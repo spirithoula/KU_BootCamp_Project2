@@ -105,10 +105,10 @@ router.get('/day/:date', withAuth, async (req, res, next) => {
       include: [
         {
           model: Event,
-          where: {
-            date: req.params.date 
-          },
-          required: false,
+          // where: {
+          //   date: req.params.date 
+          // },
+          // required: false,
         },
       ],      
     });
