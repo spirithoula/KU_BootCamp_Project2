@@ -70,8 +70,8 @@ router.get('/calendar', withAuth, async (req, res, next) => {
 });
 
 //event page with rendered locations
-router.get('/day/:date', withAuth, (req, res, next) => {
-  Location
+router.get('/day/:date', withAuth, async (req, res, next) => {
+  await Location
   .findAll({
     include: [
       {
