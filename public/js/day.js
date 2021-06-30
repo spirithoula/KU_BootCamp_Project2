@@ -14,7 +14,7 @@ let markers = new Map(); // Don't get confused! This is a *hash map* and not a g
 function setUpShowOnMapButtons() {
   $('.show-on-map').click((location) => {
     const button = $(location.currentTarget);
-    const locationId = button.data('park-id');
+    const locationId = button.data('location-id');
     const marker = markers.get(locationId);
     map.panTo(marker.getPosition());
     google.maps.location.trigger(marker, 'click');
@@ -65,7 +65,7 @@ $(document).ready(function () {
   // console.log(window.location.href);
   listItemClick();
   // getTodaysLocations();
-  // addLocationsToMap(parks);
+
   setUpShowOnMapButtons();
   // checks to see if the user had entered the page using the back button - if so it refreshes the page to keep active locations updated
   if (performance.navigation.type == 2) {

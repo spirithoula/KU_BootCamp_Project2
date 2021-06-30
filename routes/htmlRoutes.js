@@ -90,28 +90,6 @@ router.get('/seeds', (req, res) => {
   res.render('seeds', { title: 'Seed Page' });
 });
 
-function formatParksForHandlebars(parks) {
-  for (let park of parks) {
-    park.times = [
-      {
-        name: 'Morning',
-        range: '(7am - 12pm)',
-      },
-      {
-        name: 'Afternoon',
-        range: '(12pm - 6pm)',
-      },
-      {
-        name: 'Evening',
-        range: '(6pm - 10pm)',
-      },
-    ];
-
-    park.Event = null;
-  }
-
-  return parks;
-}
 function formatDate(dateOnly) {
   const date = new Date(dateOnly + 'T00:00:00');
   const dateString = date.toLocaleDateString('en-US', {
