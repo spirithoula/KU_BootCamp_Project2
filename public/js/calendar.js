@@ -1,13 +1,3 @@
-//$(document).ready(function () {
-//  // page is now ready, initialize the calendar...
-//
-//  $('#calendar').fullCalendar({
-//    // put your options and callbacks here
-//    left: 'Calendar',
-//    center: '',
-//    right: 'today prev,next',
-//  });
-//});
 function getCurrentEvents() {
   // console.log(response);
   $('#calendar').fullCalendar({

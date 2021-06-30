@@ -13,7 +13,7 @@ var locations = [
   ];
   
   //seed button for parks to facilitate easier initial deployment on heroku and elsewhere
-  $("#parkSeeds").click(function(){
+  $("#").click(function(){
    
         console.log("Location Seeds being added");
         locations.forEach( location => {

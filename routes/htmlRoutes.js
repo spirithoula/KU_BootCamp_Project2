@@ -1,5 +1,11 @@
 const router = require('express').Router();
-const { Member, User, Location, Event, EventDayTimeLocation } = require('../models');
+const {
+  Member,
+  User,
+  Location,
+  Event,
+  EventDayTimeLocation,
+} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
@@ -29,9 +35,10 @@ router.get('/new', (req, res) => {
 router.get('/profile', withAuth, async (req, res, next) => {
   try {
     const memberData = await User.findByPk(req.session.user_id, {
-      attributes: { 
-        include: ["id", "name", "profileImage"],
-        exclude: ['password'] },
+      attributes: {
+        include: ['id', 'name', 'profileImage'],
+        exclude: ['password'],
+      },
       include: [{ model: Member }],
     });
 
@@ -69,41 +76,10 @@ router.get('/calendar', withAuth, async (req, res, next) => {
   }
 });
 
-
-
-
-// router.get('/day/:date?', withAuth, async (req, res, next) => {
-//   try {
-//     const locationData = await Location.findAll({      
-//       include: [
-//         {
-//           model: Event,
-//           where: {
-//             date: req.params.date 
-//           },
-//           required: false,
-//         },
-//       ],      
-//     });
-
-//     // Serialize data so the template can read it
-//     const parks = locationData.map((park) => park.get({ plain: true }));
-//     const date = formatDate(req.params.date);
-//     formatParksForHandlebars(parks);
-
-//     res.render('day', {
-//       parks,
-//       logged_in: true,
-//       title: date,
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 router.get('/day/:date', withAuth, async (req, res, next) => {
   try {
-    res.render('day', {      
-      logged_in: true,      
+    res.render('day', {
+      logged_in: true,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -111,27 +87,23 @@ router.get('/day/:date', withAuth, async (req, res, next) => {
 });
 
 router.get('/seeds', (req, res) => {
-  res.render('seeds', {title: "Seed Page"})
-})
-
+  res.render('seeds', { title: 'Seed Page' });
+});
 
 function formatParksForHandlebars(parks) {
   for (let park of parks) {
     park.times = [
       {
-        name: "Morning",
-        range: "(7am - 12pm)",
-        
+        name: 'Morning',
+        range: '(7am - 12pm)',
       },
       {
-        name: "Afternoon",
-        range: "(12pm - 6pm)",
-        
+        name: 'Afternoon',
+        range: '(12pm - 6pm)',
       },
       {
-        name: "Evening",
-        range: "(6pm - 10pm)",
-        
+        name: 'Evening',
+        range: '(6pm - 10pm)',
       },
     ];
 
@@ -152,7 +124,6 @@ function formatDate(dateOnly) {
   return dateString;
 }
 
-
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -170,6 +141,5 @@ router.get('*', (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 module.exports = router;
