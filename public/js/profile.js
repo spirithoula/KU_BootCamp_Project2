@@ -39,7 +39,7 @@ window.onload= function(){
   
   var el = document.querySelector('#emailBtn');
   if(el) {
-    el.addEventListener('click');
+    el.addEventListener('click', newEmailBtn);
   }
 
   var element = document.querySelectorAll('.memberDeleteBtn');
