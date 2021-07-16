@@ -122,7 +122,6 @@ const newEmailBtn = async (event) => {
   event.preventDefault();
 
   if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-is');
   }
 }
 
