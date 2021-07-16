@@ -465,15 +465,15 @@ router.get("/location/:id?", (req, res) => {
 
 emailjs.send("user_k9C8gatxe5lmVjewlqf8N", 'contact_form', templateParams)
     .then(function(response) {
-       console.log('SUCCESS!', response.status, response.text);
+       console.log('Email sent succesfully!', response.status, response.text);
     }, function(error) {
-       console.log('FAILED...', error);
+       console.log('Error', error);
     });
 emailjs.sendForm("user_k9C8gatxe5lmVjewlqf8N", 'contact_form', '#myForm')
     .then(function(response) {
-       console.log('SUCCESS!', response.status, response.text);
+       console.log('Succes', response.status, response.text);
     }, function(error) {
-       console.log('FAILED...', error);
+       console.log('Failure...', error);
     });
 
 module.exports = router;
