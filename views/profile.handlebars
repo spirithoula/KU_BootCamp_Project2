@@ -188,6 +188,22 @@
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
 </div>
+<div class="field">
+  <div class="control">                        
+    <button class="button" id="emailBtn" data-id={{ id }}>
+        Send Information Via Email
+       </button>
+    </div>
+  <div class="modal" id="newEmailModal">
+    <div class="modal-background" id="emailModal"></div>
+      <div class="modal-content">
+          <div class="box">
+          <div class="field">
+            <label class="label">Enter Email</label>
+                <div class="control">
+                  <input class="input" type="email" id="memberName" required/>
+            </div>
+    </div>
 
 {{> addMedicalInfo}}
 
