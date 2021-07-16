@@ -251,3 +251,13 @@ $("#picture-upload").submit((event) => {
       $("#upload-progress").hide();
     });
   });
+ 
+  $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    type: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json'
+}).done(function() {
+    alert('Your email has been sent!');
+}).fail(function(error) {
+    alert('Error' + JSON.stringify(error));
+});
