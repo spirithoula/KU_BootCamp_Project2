@@ -37,6 +37,10 @@ window.onload= function(){
     el.addEventListener('click', newFormHandler);
   }
   
+  var el = document.querySelector('#emailBtn');
+  if(el) {
+    el.addEventListener('click');
+  }
 
   var element = document.querySelectorAll('.memberDeleteBtn');
   for (i=0; i < element.length; i++) {
