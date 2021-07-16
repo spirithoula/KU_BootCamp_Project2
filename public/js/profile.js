@@ -119,12 +119,47 @@ window.onload= function(){
   // }
   };
 const newEmailBtn = async (event) => {
-  event.preventDefault();
-
-  if (event.target.hasAttribute('data-id')) {}
+  import React from 'react';
+  import emailjs from 'emailjs-com';
+  
+  import './ContactUs.css';
+  
+  export default function ContactUs() {
+  
+    function sendEmail(e) {
+      e.preventDefault();
+  
+      emailjs.sendForm('YOUR_SERVICE_ID', 'contact_form', e.target, 'user_k9C8gatxe5lmVjewlqf8N')
+        .then((result) => {
+            console.log(result.text);
+        }, (error) => {
+            console.log(error.text);
+        });
+    }
+  
+    return (
+      <form className="contact-form" onSubmit={sendEmail}>
+        <input type="hidden" name="contact_number" />
+        <label>Name</label>
+        <input type="text" name="user_name" />
+        <label>Email</label>
+        <input type="email" name="user_email" />
+        <label>Message</label>
+        <textarea name="message" />
+        <input type="submit" value="Send" />
+      </form>
+    );
+  }
+  $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    type: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json'
+}).done(function() {
+    alert('Your email has been sent!');
+}).fail(function(error) {
+    alert('Error' + JSON.stringify(error));
+});
 }
-
-
 
   const delButtonHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
@@ -250,12 +285,3 @@ $("#picture-upload").submit((event) => {
     });
   });
  
-  $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
-    type: 'POST',
-    data: JSON.stringify(data),
-    contentType: 'application/json'
-}).done(function() {
-    alert('Your email has been sent!');
-}).fail(function(error) {
-    alert('Error' + JSON.stringify(error));
-});
