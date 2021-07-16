@@ -198,25 +198,37 @@
   <div class="modal" id="newEmailModal">
     <div class="modal-background" id="emailModal"></div>
       <div class="modal-content">
-          <div class="box">
-          <div class="field">
-            <label class="label">Enter Email</label>
-                <div class="control">
-                  <input class="input" type="email" id="memberName" required/>
+      <div class="box">
+      <div class="field">
+          <label class="label">Enter Email</label>
+             <div class="control">
+                <input class="input" type="email" id="memberName" required/>
+            </div>
+               <div class="modal-is-active">
+                 <div class="modal-background"></div>
+                 <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Modal title</p>
+                        <button class="delete" aria-label="close"></button>
+                    </header>
+                  <section class="modal-card-body">
+        <!-- Content ... -->
+                  </section>
+                  <footer class="modal-card-foot">
+                   <button class="button is-success">Save changes</button>
+                    <button class="button">Cancel</button>
+                  </footer>
+                </div>
             </div>
     </div>
+  
 
 {{> addMedicalInfo}}
 
 <script src="/js/profile.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init("user_k9C8gatxe5lmVjewlqf8N");
-   )();
-</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script type="text/javascript">(function(){emailjs.init("user_k9C8gatxe5lmVjewlqf8N");)();</script>
 
 
         
