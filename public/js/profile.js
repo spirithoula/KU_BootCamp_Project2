@@ -154,11 +154,11 @@ const newEmailBtn = async (event) => {
     type: 'POST',
     data: JSON.stringify(data),
     contentType: 'application/json'
-}).done(function() {
+  }).done(function() {
     alert('Your email has been sent!');
-}).fail(function(error) {
+  }).fail(function(error) {
     alert('Error' + JSON.stringify(error));
-});
+  });
 }
 
   const delButtonHandler = async (event) => {
