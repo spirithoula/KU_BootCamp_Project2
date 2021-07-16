@@ -471,7 +471,7 @@ emailjs.send("user_k9C8gatxe5lmVjewlqf8N", 'contact_form', templateParams)
     });
 emailjs.sendForm("user_k9C8gatxe5lmVjewlqf8N", 'contact_form', '#myForm')
     .then(function(response) {
-       console.log('Succes', response.status, response.text);
+       console.log('Success', response.status, response.text);
     }, function(error) {
        console.log('Failure...', error);
     });

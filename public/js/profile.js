@@ -121,8 +121,7 @@ window.onload= function(){
 const newEmailBtn = async (event) => {
   event.preventDefault();
 
-  if (event.target.hasAttribute('data-id')) {
-  }
+  if (event.target.hasAttribute('data-id')) {}
 }
 
 
