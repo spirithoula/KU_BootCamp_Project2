@@ -11,6 +11,9 @@ $('#memberModal').click(function () {
   $('#newMemberModal').toggleClass('is-active');
 });
 
+$('#emailBtn').click(function () {
+  $('#newEmailModal').toggleClass('is-active');
+});
 
 // close modal
 $("#profileImageModalBackground").click(function() {
