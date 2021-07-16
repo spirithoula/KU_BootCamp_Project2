@@ -462,6 +462,11 @@ router.get("/location/:id?", (req, res) => {
     });
   }
 }); //end of location get
-
+emailjs.sendForm("user_k9C8gatxe5lmVjewlqf8N", 'contact_form', '#myForm')
+    .then(function(response) {
+       console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+       console.log('FAILED...', error);
+    });
 
 module.exports = router;
